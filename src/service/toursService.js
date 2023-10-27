@@ -15,3 +15,10 @@ export const getAllToursByZone = createAsyncThunk(
         return res.data;
     }
 )
+export const getToursById = createAsyncThunk(
+    "getToursById",
+    async (idTour) => {
+        const res = await customAxios.get("tours/getTourById/" + idTour , {headers: {Authorization: "Bearer " + localStorage.getItem("token")}});
+        return res.data;
+    }
+)

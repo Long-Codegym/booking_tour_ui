@@ -1,5 +1,5 @@
 import {useDispatch, useSelector} from "react-redux";
-import {useLocation, useParams} from "react-router-dom";
+import {Link, useLocation, useParams} from "react-router-dom";
 import {useEffect} from "react";
 import {getAllToursByZone} from "../service/toursService";
 
@@ -19,7 +19,6 @@ const AllTourByZone =() =>{
 
     return(
         <>
-            <>
                 {/* Package Start */}
                 <div className="container-xxl py-5">
                     <div className="container">
@@ -63,6 +62,7 @@ const AllTourByZone =() =>{
                                                 Tempor erat elitr rebum at clita. Diam dolor diam ipsum sit diam
                                                 amet diam eos
                                             </p>
+                                            <Link to={"/detail/" + item.id}>
                                             <div className="d-flex justify-content-center mb-2">
                                                 <a href="book_tour/src/home/AllTourByZone#"
                                                    className="btn btn-sm btn-primary px-3 border-end"
@@ -75,6 +75,7 @@ const AllTourByZone =() =>{
                                                     Đặt Tour ngay
                                                 </a>
                                             </div>
+                                            </Link>
                                         </div>
                                     </div>
                                 </div>
@@ -83,8 +84,6 @@ const AllTourByZone =() =>{
                     </div>
                 </div>
                 {/* Package End */}
-            </>
-
         </>
     )
 }
