@@ -6,6 +6,7 @@ import Home from "./home/Home";
 import AllTourByZone from "./home/AllTourByZone";
 import Register from "./register/Register";
 import DetailTour from "./home/DetailTour";
+import CreateTour from "./home/CreateTour";
 
 function App() {
   return (
@@ -17,6 +18,7 @@ function App() {
               <Route path={""} element={<Home/>}></Route>
               <Route path={"tour/:zone"} element={<AllTourByZone/>}></Route>
               <Route path={"/detail/:id"} element={<DetailTour/>}/>
+              <Route path={"/createTour/:id"} element={<CreateTour/>}/>
             </Route>
       </Routes>
     </>
