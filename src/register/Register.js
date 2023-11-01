@@ -4,6 +4,7 @@ import Swal from "sweetalert2";
 import * as Yup from 'yup';
 import {useNavigate} from "react-router";
 import axios from "axios";
+import {Link} from "react-router-dom";
 
 const validationSchema = Yup.object().shape({
     username: Yup.string()
@@ -17,7 +18,8 @@ const validationSchema = Yup.object().shape({
         .oneOf([Yup.ref('password'), null], 'Mật khẩu không trùng khớp')
         .required('Nhập lại mật khẩu là bắt buộc'),
     email: Yup.string().email('Email không hợp lệ').required('Email là bắt buộc'),
-    nickName: Yup.string().required('Tên người dùng là bắt buộc')
+    nickName: Yup.string().required('Tên người dùng là bắt buộc'),
+    address: Yup.string().required('Địa chỉ là bắt buộc'),
 });
 const Register = () => {
     const [message, setMessage] = useState('');
@@ -113,7 +115,7 @@ const Register = () => {
             {/* Navbar & Hero Start */}
             <div className="container-fluid position-relative p-0">
                 <nav className="navbar navbar-expand-lg navbar-light px-4 px-lg-5 py-3 py-lg-0">
-                    <a href="" className="navbar-brand p-0">
+                    <a  href="/" className="navbar-brand p-0">
                         <h1 className="text-primary m-0">
                             <i className="fa fa-map-marker-alt me-3"/>
                             Tourist
@@ -139,6 +141,7 @@ const Register = () => {
                                         confirmPassword: '',
                                         email: '',
                                         nickName: '',
+                                        address: '',
                                     }}
                                     validationSchema={validationSchema}
                                     onSubmit={(values, actions) => {
@@ -155,7 +158,7 @@ const Register = () => {
                                                     await Swal.fire({
                                                         position: 'center',
                                                         icon: 'success',
-                                                        title: 'Đăng kí thành công, kiểm tra email để xác minh tài khoản.',
+                                                        title: 'Đăng kí thành công.',
                                                         showConfirmButton: false,
                                                         timer: 1500
                                                     });
@@ -257,9 +260,9 @@ const Register = () => {
                                             <div className="fieldGroup" style={{ display: 'flex',height:'70px' }}>
                                                 <div className="input-wrapper"  style={{width:'50%', fontSize: '14px', color:'red'}}>
                                                     <Field
-                                                        type="password"
-                                                        name="password"
-                                                        placeholder="Mật khẩu"
+                                                        type="text"
+                                                        name="address"
+                                                        placeholder="Địa chỉ"
                                                         maxLength="5000"
                                                         autoComplete="false"
                                                         style={{
@@ -270,10 +273,10 @@ const Register = () => {
                                                             outline: 'none', width:'250px'
                                                         }}
                                                     />
-                                                    <ErrorMessage name="password" component="div" className="error" />
+                                                    <ErrorMessage name="address" component="div" className="error" />
                                                 </div>
 
-                                                <div className="register-verify-email"  style={{fontSize: '14px', color:'red',height:'70px'}}>
+                                                <div className="register-verify-email"  style={{marginLeft: '136px', fontSize: '14px', color:'red',height:'70px'}}>
                                                 <div className="fieldGroup">
 
                                                     <Field type="email" name="email" placeholder="Email" maxLength="5000" autoComplete="false" onFocus={resetMessage} style={{marginLeft:'150px',textAlign: 'center', borderRadius: '7px', padding: '7px', margin: '10px', outline: 'none', width:'250px'}}

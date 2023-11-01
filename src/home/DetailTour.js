@@ -17,65 +17,183 @@ const DetailTour = () => {
     const location = useLocation();
     const encodedZone = location.pathname.split("/detail/")[1];
     const idTour = decodeURIComponent(encodedZone);
+    const [page, setPage] = useState(1);
 
-    useEffect(()=>{
+    useEffect(() => {
         dispatch(getToursById(idTour))
-    },[idTour])
+    }, [idTour])
     const tour = useSelector((state) => {
-        console.log(state.zone.zone)
         return state.zone.zone.tour;
     });
+    const handleStarClicking = (e, num) => {
+        setPage(num);
+    }
+    const [visibleImages, setVisibleImages] = useState(6);
+    const loadMoreImages = () => {
+        setVisibleImages(prevVisibleImages => prevVisibleImages + 6)
+    };
+    const loadImages = () => {
+        setVisibleImages(prevVisibleImages => prevVisibleImages - 6)
+    };
     return (
+
         <>
-        <div className="container-xxl py-5">
-            <div className="container">
-                <div className="row g-5">
-                    <div className="col-lg-6 wow fadeInUp" data-wow-delay="0.1s" style={{minHeight:'400px'}}>
-                        <div className="position-relative h-100">
-                            <img className="img-fluid position-absolute w-100 h-100" src={tour.tour.img} alt="" style={{objectFit:"cover"}}/>
+            <div className="container-xxl py-5">
+                <ul id="tour-tab" className="nav nav-tabs">
+                    <li className="active">
+                        <a data-toggle="tab" href="#tour-schedule" onClick={(e) => {handleStarClicking(e, 1)}}>
+                            Thông tin tour
+                        </a>
+                    </li>
+                    <li className="">
+                        <a data-toggle="tab" href="#tour-pricing" onClick={(e) => {handleStarClicking(e, 2)}}>
+                            Giá
+                        </a>
+                    </li>
+                    <li className="">
+                        <a data-toggle="tab" href="#tour-info" onClick={(e) => {handleStarClicking(e, 3)}}>
+                            Hình ảnh Tour
+                        </a>
+                    </li>
+                    <li className="">
+                        <a data-toggle="tab" href="#tour-overview" onClick={(e) => {
+                            handleStarClicking(e, 4)
+                        }}>
+                            Lịch Trình
+                        </a>
+                    </li>
+                </ul>
+            </div>
+            <div className="container-xxl py-5">
+                {page == 1 && tour && tour.tour &&
+                    <div className="container">
+                        <div className="row g-5">
+                            <div className="col-lg-6 wow fadeInUp" data-wow-delay="0.1s" style={{minHeight: '400px'}}>
+                                <div className="position-relative h-100">
+                                    <img className="img-fluid position-absolute w-100 h-100" src={tour.tour.img} alt=""
+                                         style={{objectFit: "cover"}}/>
+                                </div>
+                            </div>
+                            <div className="col-lg-6 wow fadeInUp" data-wow-delay="0.3s">
+                                <h6 className="section-title bg-white text-start text-primary pe-3">Thông tin về
+                                    Tour</h6>
+                                <h1 className="mb-4">
+                                    {tour.tour.name}
+                                </h1>
+                                <p className="mb-4">
+                                    Phương tiện {tour.tour.convenientWard}
+                                </p>
+                                <div className="row gy-2 gx-4 mb-4">
+                                    <div className="col-sm-6">
+                                        <p className="mb-0"><i className="fa fa-arrow-right text-primary me-2"></i>
+                                            {tour.tour.price}
+                                        </p>
+                                    </div>
+                                    <div className="col-sm-6">
+                                        <p className="mb-0"><i className="fa fa-arrow-right text-primary me-2"></i>
+                                            {tour.tour.tourTime}
+                                        </p>
+                                    </div>
+                                    <div className="col-sm-6">
+                                        <p className="mb-0"><i className="fa fa-arrow-right text-primary me-2"></i>
+                                            {tour.tour.schedule}
+                                        </p>
+                                    </div>
+                                    <div className="col-sm-6">
+                                        <p className="mb-0"><i className="fa fa-arrow-right text-primary me-2"></i>
+                                            Đã đặt: {tour.tour.bookings} Tour
+                                        </p>
+                                    </div>
+                                    <div className="col-sm-6">
+                                        <p className="mb-0"><i className="fa fa-arrow-right text-primary me-2"></i>chưa
+                                            biz ghi thêm gì</p>
+                                    </div>
+                                    <div className="col-sm-6">
+                                        <p className="mb-0"><i className="fa fa-arrow-right text-primary me-2"></i>chưa
+                                            biz ghi thêm gì</p>
+                                    </div>
+                                </div>
+                                <a class="btn btn-primary py-3 px-5 mt-2" href="">Đặt Tour</a>
+                            </div>
                         </div>
                     </div>
-                    <div className="col-lg-6 wow fadeInUp" data-wow-delay="0.3s">
-                        <h6 className="section-title bg-white text-start text-primary pe-3">Thông tin về Tour</h6>
-                        <h1 className="mb-4">
-                            {tour.tour.name}
-                        </h1>
-                        <p className="mb-4">
-                            Phương tiện {tour.tour.convenientWard}
-                        </p>
-                        <div className="row gy-2 gx-4 mb-4">
-                            <div className="col-sm-6">
-                                <p className="mb-0"><i className="fa fa-arrow-right text-primary me-2"></i>
-                                    {tour.tour.price}
-                                </p>
-                            </div>
-                            <div className="col-sm-6">
-                                <p className="mb-0"><i className="fa fa-arrow-right text-primary me-2"></i>
-                                    {tour.tour.tourTime}
-                                </p>
-                            </div>
-                            <div className="col-sm-6">
-                                <p className="mb-0"><i className="fa fa-arrow-right text-primary me-2"></i>
-                                    {tour.tour.schedule}
-                                </p>
-                            </div>
-                            <div className="col-sm-6">
-                                <p className="mb-0"><i className="fa fa-arrow-right text-primary me-2"></i>
-                                  Đã đặt:  {tour.tour.bookings} Tour
-                                </p>
-                            </div>
-                            <div className="col-sm-6">
-                                <p className="mb-0"><i className="fa fa-arrow-right text-primary me-2"></i>chưa biz ghi thêm gì</p>
-                            </div>
-                            <div className="col-sm-6">
-                                <p className="mb-0"><i className="fa fa-arrow-right text-primary me-2"></i>chưa biz ghi thêm gì</p>
-                            </div>
+                }
+                <div className="container">
+                    {page == 2 && tour && tour.tour &&
+                        <table className="table_style table_list table_list__bg">
+                            <thead>
+                            <tr>
+                                <th width="5%">STT</th>
+                                <th width="16%">Khách sạn</th>
+                                <th width="17%">Giá người lớn</th>
+                                <th width="17%">Giá trẻ em</th>
+                                <th width="17%" className="center">
+                                    Ưu đãi
+                                </th>
+                                <th width="15%">Hành động</th>
+                            </tr>
+                            </thead>
+                            <tbody>
+                            <tr>
+                                <td data-th="STT" className="center">
+                                    1{" "}
+                                </td>
+                                <td data-th="Khách sạn" className="center custom-star">
+                                    <i className="fa fa-star"/>
+                                    <i className="fa fa-star"/>
+                                    <i className="fa fa-star"/>
+                                </td>
+                                <td data-th="Giá người lớn" className="center pri">
+                                    <span className="price-bg__pro">{tour.tour.price} / 1 người</span>
+                                </td>
+                                <td data-th="Giá trẻ em" className="center pri">
+                                    <span className="price-bg__pro">dưới 6 tuổi miễn phí</span>
+                                </td>
+                                <td data-th="Suất ăn" className="center" style={{color: "red"}}>
+                                    {tour.tour.discount}%
+                                </td>
+                                <td data-th="Hành động" className="center">
+                                    <a target="_blank" className="btn-tour btn-tour__pro" href="booking/243/76">
+                                        Đặt ngay
+                                    </a>
+                                </td>
+                            </tr>
+                            </tbody>
+                        </table>
+                    }
+
+                </div>
+                <div className="container">
+                    {page == 3 && tour && tour.image &&
+                        <div className="image-gallery">
+                            {tour.image.slice(0, visibleImages).map((item, key) => (
+                                // <div className="row g-5">
+                                <div key={key} className="col-lg-4 wow fadeInUp" data-wow-delay="0.1s">
+                                    <div className="position-relative">
+                                        <img
+                                            className="img-fluid w-100"
+                                            src={item.img}
+                                            alt=""
+                                            style={{objectFit: "cover", maxHeight: "200px"}}
+                                        />
+                                    </div>
+                                </div>
+                            ))}
+                            {visibleImages < tour.image.length ? (
+                                <div className="container" style={{marginLeft: "45%"}}>
+                                    <button className="btn btn-primary" onClick={loadMoreImages}>
+                                        Xem thêm
+                                    </button>
+                                </div>
+                            ) :  <div className="container"  style={{marginLeft: "45%"}}>
+                                <button className="btn btn-primary" style={{backgroundColor: "#86B817"}} onClick={loadImages}>
+                                    Thu ngọn
+                                </button>
+                            </div>}
                         </div>
-                        <a class="btn btn-primary py-3 px-5 mt-2" href="">Read More</a>
-                    </div>
+                    }
                 </div>
             </div>
-        </div>
-    </>)
+        </>)
 };
 export default DetailTour;

@@ -1,3 +1,5 @@
+import {Link} from "react-router-dom";
+
 const Header = () =>{
     return (
         <>
@@ -21,6 +23,7 @@ const Header = () =>{
             <link href="../resources/lib/tempusdominus/css/tempusdominus-bootstrap-4.min.css" rel="stylesheet"/>
             {/* Customized Bootstrap Stylesheet */}
             <link href="../resources/css/bootstrap.min.css" rel="stylesheet" />
+            <link href="../resources/css/uli_li.css" rel="stylesheet" />
             {/* Template Stylesheet */}
             <link href="../resources/css/style.css" rel="stylesheet" />
             {/* Spinner Start */}
@@ -75,7 +78,7 @@ const Header = () =>{
             {/* Navbar & Hero Start */}
             <div className="container-fluid position-relative p-0">
                 <nav className="navbar navbar-expand-lg navbar-light px-4 px-lg-5 py-3 py-lg-0">
-                    <a href="" className="navbar-brand p-0">
+                    <a className="navbar-brand p-0">
                         <h1 className="text-primary m-0">
                             <i className="fa fa-map-marker-alt me-3" />
                             Tourist
@@ -87,7 +90,7 @@ const Header = () =>{
                     </button>
                     <div className="collapse navbar-collapse" id="navbarCollapse">
                         <div className="navbar-nav ms-auto py-0">
-                            <a href="index.html" className="nav-item nav-link active">Trang chủ</a>
+                           <Link to={""}><a  className="nav-item nav-link active">Trang chủ</a></Link>
                             <a href="about.html" className="nav-item nav-link">Về chúng tôi</a>
                             <a href="service.html" className="nav-item nav-link">Dịch vụ</a>
                             <a href="package.html" className="nav-item nav-link">Tour</a>
