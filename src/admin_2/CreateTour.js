@@ -1,17 +1,18 @@
 import { useDispatch, useSelector } from "react-redux";
 import React, { useEffect, useState } from "react";
-import {addTour, getAllCity, getAllSupplies} from "../service/toursService";
+import { addTour, getAllCity, getAllSupplies } from "../service/toursService";
 
 const CreateTour = () => {
     const accountData = localStorage.getItem("account");
     const [tourTimes, setTourTime] = useState(0);
     const [imageURL, setImageURL] = useState("");
+    const [add,setAdd]=useState(false);
     let idAccount = null;
 
     if (accountData) {
         try {
             idAccount = JSON.parse(accountData).id;
-        } catch (e) {}
+        } catch (e) { }
     }
 
     const dispatch = useDispatch();
@@ -61,9 +62,9 @@ const CreateTour = () => {
         const newTourTime = parseInt(event.target.value, 10);
         setTourTime(newTourTime);
     };
-    const [obj,setObj] = useState({
+    const [obj, setObj] = useState({
         tour: createTour,
-        tourSchedules:  tourSchedule
+        tourSchedules: tourSchedule
     });
 
     const handleImageUpload = (event) => {
@@ -76,6 +77,7 @@ const CreateTour = () => {
 
     const handleAddTour = (event) => {
         event.preventDefault();
+        setAdd(true);
         const name = event.target.name.value;
         const price = event.target.price.value;
         const convenientWard = event.target.convenientWard.value;
@@ -122,7 +124,7 @@ const CreateTour = () => {
             setCreateTour(updatedCreateTour);
             setTourSchedule(tourSchedule);
             setObj({
-                tour: createTour,
+                tour: updatedCreateTour,
                 tourSchedules: tourSchedule
             });
 
@@ -131,12 +133,15 @@ const CreateTour = () => {
         }
     };
 
-    console.log(obj)
 
     useEffect(() => {
         dispatch(getAllSupplies());
         dispatch(getAllCity());
-        dispatch(addTour(obj));
+        if(add){
+            console.log(obj);
+            dispatch(addTour(obj));
+            setAdd(false);
+        }
     }, [obj]);
 
     const renderTourScheduleForms = () => {
@@ -181,7 +186,7 @@ const CreateTour = () => {
         <>
             <link rel="stylesheet" type="text/css" href="/css_create_tour/create_tour.css" />
             <h1 style={{ color: "#333" }}>Thông tin Tour</h1>
-            <form onSubmit={handleAddTour}>
+            <form onSubmit={(event)=>handleAddTour(event)}>
                 <table>
                     <td>
                         <label htmlFor="name">Tên Tour:</label>
@@ -194,7 +199,7 @@ const CreateTour = () => {
                         <input type="text" id="convenientWard" name="convenientWard" />
 
                         <label htmlFor="tourTime">Thời gian Tour (ngày):</label>
-                        <input type="number" id="tourTime" name="tourTime"  onChange={handleTourTimeChange}/>
+                        <input type="number" id="tourTime" name="tourTime" onChange={handleTourTimeChange} />
 
                         {/*<label htmlFor="schedule">Lịch trình:</label>*/}
                         {/*<textarea id="schedule" name="schedule" defaultValue={""} />*/}
@@ -211,7 +216,7 @@ const CreateTour = () => {
 
                         <label htmlFor="city">Thành phố:</label>
                         <select id="city" name="city">
-                            {allCity && allCity.map((item,key)=>(
+                            {allCity && allCity.map((item, key) => (
                                 <option value={item.id}>{item.name}</option>
                             ))}
                         </select>
@@ -230,11 +235,11 @@ const CreateTour = () => {
                     </td>
                     {tourTimes > 0 && renderTourScheduleForms()}
                     <tr>
-                        <td colspan={2+tourTimes} style={{ textAlign: "center" }}>
+                        <td colspan={2 + tourTimes} style={{ textAlign: "center" }}>
                             <button className="btn-17">
-                <span className="text-container">
-                  <span className="text">Thêm</span>
-                </span>
+                                <span className="text-container">
+                                    <span className="text">Thêm</span>
+                                </span>
                             </button>
                         </td>
                     </tr>
