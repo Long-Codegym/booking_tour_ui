@@ -50,3 +50,10 @@ export const addTour = createAsyncThunk(
         return res.data;
     }
 )
+export const addBill = createAsyncThunk(
+    "addBill",
+    async (bill) => {
+        const res = await customAxios.post("bills",bill, {headers: {Authorization: "Bearer " + localStorage.getItem("token")}});
+        return res.data;
+    }
+)
