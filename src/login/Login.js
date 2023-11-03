@@ -46,11 +46,11 @@ function Login() {
             const response = await LoginService.login(values);
             const data = response.data;
             console.log(data.isActive);
-            if (data.status.name === "active" && data.isActive) {
+            if (data.status.name === "Active" && data.isActive) {
                 localStorage.setItem("token", data.token);
                 localStorage.setItem("account", JSON.stringify(data));
                 if (data.role.name ==="ROLE_ADMIN") {
-                    navigate("/");
+                    navigate("/home_admin");
                 } else if (data.role.name ==="ROLE_USER") {
                     navigate("/");
                 } else if (data.role.name ===("ROLE_ADMIN2")) {
@@ -59,10 +59,10 @@ function Login() {
             } else if (data.status.name === "emailverify") {
                 navigate("/login");
                 setMessage("tài khoản xác nhận email");
-            } else if (data.status.name === "register") {
+            } else if (data.status.name === "Register") {
                 navigate("/login");
                 setMessage("tài khoản chưa được chấp nhận");
-            } else if (data.status.name === "block") {
+            } else if (data.status.name === "Block") {
                 navigate("/login");
                 setMessage("tài khoản của bạn đã bị khóa");
             } else if (!data.isActive) {

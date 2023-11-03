@@ -9,8 +9,11 @@ import DetailTour from "./home/DetailTour";
 import CreateTour from "./admin_2/CreateTour";
 import CreateTourTest from "./admin_2/CreateTourTest";
 import BookingTour from "./home/BookingTour";
+import HomeAdmin from "./admin/HomeAdmin";
+import ShowAcc from "./admin/ShowAcc";
 
 function App() {
+    // const user =JSON.parse(localStorage.getItem("account"));
   return (
     <>
       <Routes>
@@ -24,6 +27,11 @@ function App() {
               <Route path={"/creates"} element={<CreateTourTest/>}/>
               <Route path={"/bookingTour/:id"} element={<BookingTour/>}/>
             </Route>
+          {/*{user&&user.role.name ==="ROLE_ADMIN"?*/}
+          <Route path={"/home_admin"} element={<HomeAdmin/>}>
+              <Route path={""} element={<ShowAcc/>}/>
+          </Route>
+          {/*// :<></>}*/}
       </Routes>
     </>
   );

@@ -4,6 +4,7 @@ import {allZone} from "../service/zoneService";
 import Zone from "./Zone";
 import PopularTours from "./PopularTours";
 import {getAllSupplies} from "../service/toursService";
+import {getAllAccByAdmin} from "../service/accountService";
 
 const Home =()=>{
     const dispatch = useDispatch();
@@ -13,10 +14,7 @@ const Home =()=>{
     },[])
     return (
         <>
-            {/* Destination Start */}
             <PopularTours/>
-            {/* Destination Start */}
-            {/* Package Start */}
             <Zone/>
         </>
 
