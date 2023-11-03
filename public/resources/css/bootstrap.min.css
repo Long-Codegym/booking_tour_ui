@@ -3413,7 +3413,7 @@ textarea.form-control-lg {
 }
 
 .fade:not(.show) {
-    opacity: 0
+    opacity: 1
 }
 
 .collapse:not(.show) {

@@ -50,7 +50,7 @@ function Login() {
                 localStorage.setItem("token", data.token);
                 localStorage.setItem("account", JSON.stringify(data));
                 if (data.role.name ==="ROLE_ADMIN") {
-                    navigate("/");
+                    navigate("/home_admin");
                 } else if (data.role.name ==="ROLE_USER") {
                     navigate("/");
                 } else if (data.role.name ===("ROLE_ADMIN2")) {

@@ -36,10 +36,6 @@ const CreateTour = () => {
                 },
                 accountCC:{},
                 accountUser:{},
-                
-
-
-
 
             }}
             onSubmit={(values, actions) => {
@@ -56,7 +52,7 @@ const CreateTour = () => {
                             await Swal.fire({
                                 position: 'center',
                                 icon: 'success',
-                                title: 'Đăng kí thành công, kiểm tra email để xác minh tài khoản.',
+                                title: 'Đăng kí thành công.',
                                 showConfirmButton: false,
                                 timer: 1500
                             });
