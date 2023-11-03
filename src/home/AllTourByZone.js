@@ -3,6 +3,7 @@ import {Link, useLocation, useParams} from "react-router-dom";
 import {useEffect, useState} from "react";
 import {getAllSupplies, getAllToursByZone, getTourByFilter} from "../service/toursService";
 import TourFilter from "./TourFilter";
+import BookingTour from "./BookingTour";
 
 const AllTourByZone =() =>{
     const dispatch = useDispatch();
@@ -54,6 +55,14 @@ const AllTourByZone =() =>{
             arrayCheckCities.push(cityId);
         }
     });
+    const [tourBooking, setTourBooking] = useState({
+    });
+
+    const handleButtonClick = (e, num) => {
+        setTourBooking(num);
+    }
+    localStorage.setItem("booking-tour", JSON.stringify(tourBooking));
+
     return(
         <>
                 {/* Package Start */}
@@ -146,16 +155,20 @@ const AllTourByZone =() =>{
                                                                     <small className="fa fa-star text-primary" />
                                                                 </div>
                                                                 <p>{item.tour.describes}</p>
-                                                                <Link to={"/detail/" + item.tour.id}>
+
                                                                     <div className="d-flex justify-content-center mb-2">
+                                                                        <Link to={"/detail/" + item.tour.id}>
                                                                         <a href="book_tour/src/home/AllTourByZone#" className="btn btn-sm btn-primary px-3 border-end" style={{ borderRadius: "30px 0 0 30px" }}>
                                                                             Chi tiết Tour
                                                                         </a>
-                                                                        <a href="book_tour/src/home/AllTourByZone#" className="btn btn-sm btn-primary px-3" style={{ borderRadius: "0 30px 30px 0" }}>
+                                                                        </Link>
+                                                                        <Link to={"/bookingTour/" + item.tour.id}>
+                                                                        <a Bo href="book_tour/src/home/AllTourByZone#" className="btn btn-sm btn-primary px-3" style={{ borderRadius: "0 30px 30px 0" }}>
                                                                             Đặt Tour ngay
                                                                         </a>
+                                                                        </Link>
                                                                     </div>
-                                                                </Link>
+
                                                             </div>
                                                         </div>
                                                     </div>
@@ -171,3 +184,7 @@ const AllTourByZone =() =>{
     )
 }
 export default AllTourByZone;
+
+// <Link to={{pathname: '/booking_tour',state: { item }}} className="btn btn-sm btn-primary px-3" style={{ borderRadius: "0 30px 30px 0" }}>
+//     Đặt Tour ngay
+// </Link>

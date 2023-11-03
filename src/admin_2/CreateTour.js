@@ -8,7 +8,6 @@ const CreateTour = () => {
     const [imageURL, setImageURL] = useState("");
     const [add,setAdd]=useState(false);
     let idAccount = null;
-
     if (accountData) {
         try {
             idAccount = JSON.parse(accountData).id;
@@ -27,7 +26,6 @@ const CreateTour = () => {
         {
             day: "",
             content: "",
-            img: "",
             start: "",
             morning: "",
             noon: "",
@@ -113,7 +111,6 @@ const CreateTour = () => {
             const tourSchedule = Array.from({ length: tourTimes }).map((_, i) => ({
                 day: event.target[`TourSchedule[${i}].day`].value,
                 content: event.target[`TourSchedule[${i}].content`].value,
-                img: event.target[`TourSchedule[${i}].img`].value,
                 start: event.target[`TourSchedule[${i}].start`].value,
                 morning: event.target[`TourSchedule[${i}].morning`].value,
                 noon: event.target[`TourSchedule[${i}].noon`].value,
@@ -138,7 +135,6 @@ const CreateTour = () => {
         dispatch(getAllSupplies());
         dispatch(getAllCity());
         if(add){
-            console.log(obj);
             dispatch(addTour(obj));
             setAdd(false);
         }
@@ -151,29 +147,29 @@ const CreateTour = () => {
             tourScheduleForms.push(
                 <td key={i}>
                     <h2>Lịch trình ngày {i + 1}</h2>
-                    <label htmlFor={`TourSchedule[${i}].day`}>Day:</label>
-                    <input type="text" id={`TourSchedule[${i}].day`} name={`TourSchedule[${i}].day`} />
+                    <label htmlFor={`TourSchedule[${i}].day`}>Ngày :</label>
+                    <input type="text" id={`TourSchedule[${i}].day`} name={`TourSchedule[${i}].day`} value={i+1} />
 
                     <label htmlFor={`TourSchedule[${i}].content`}>Content:</label>
-                    <input type="text" id={`TourSchedule[${i}].content`} name={`TourSchedule[${i}].content`} />
+                    <textarea type="text" id={`TourSchedule[${i}].content`} name={`TourSchedule[${i}].content`} />
 
-                    <label htmlFor={`TourSchedule[${i}].img`}>Image URL:</label>
-                    <input type="text" id={`TourSchedule[${i}].img`} name={`TourSchedule[${i}].img`} />
+                    {/*<label htmlFor={`TourSchedule[${i}].img`}>Image URL:</label>*/}
+                    {/*<input type="text" id={`TourSchedule[${i}].img`} name={`TourSchedule[${i}].img`} />*/}
 
-                    <label htmlFor={`TourSchedule[${i}].start`}>Start:</label>
-                    <input type="text" id={`TourSchedule[${i}].start`} name={`TourSchedule[${i}].start`} />
+                    <label htmlFor={`TourSchedule[${i}].start`}>Bắt đầu đi từ đâu:</label>
+                    <textarea type="text" id={`TourSchedule[${i}].start`} name={`TourSchedule[${i}].start`} />
 
-                    <label htmlFor={`TourSchedule[${i}].morning`}>Morning:</label>
-                    <input type="text" id={`TourSchedule[${i}].morning`} name={`TourSchedule[${i}].morning`} />
+                    <label htmlFor={`TourSchedule[${i}].morning`}>Lịch trình buổi sáng:</label>
+                    <textarea type="text" id={`TourSchedule[${i}].morning`} name={`TourSchedule[${i}].morning`} />
 
-                    <label htmlFor={`TourSchedule[${i}].noon`}>Noon:</label>
-                    <input type="text" id={`TourSchedule[${i}].noon`} name={`TourSchedule[${i}].noon`} />
+                    <label htmlFor={`TourSchedule[${i}].noon`}>Lịch trình buổi trưa:</label>
+                    <textarea type="text" id={`TourSchedule[${i}].noon`} name={`TourSchedule[${i}].noon`} />
 
-                    <label htmlFor={`TourSchedule[${i}].afternoon`}>Afternoon:</label>
-                    <input type="text" id={`TourSchedule[${i}].afternoon`} name={`TourSchedule[${i}].afternoon`} />
+                    <label htmlFor={`TourSchedule[${i}].afternoon`}>Lịch trình buổi chiều:</label>
+                    <textarea type="text" id={`TourSchedule[${i}].afternoon`} name={`TourSchedule[${i}].afternoon`} />
 
-                    <label htmlFor={`TourSchedule[${i}].evening`}>Evening:</label>
-                    <input type="text" id={`TourSchedule[${i}].evening`} name={`TourSchedule[${i}].evening`} />
+                    <label htmlFor={`TourSchedule[${i}].evening`}>Lịch trình buổi tối:</label>
+                    <textarea type="text" id={`TourSchedule[${i}].evening`} name={`TourSchedule[${i}].evening`} />
                 </td>
             );
         }
