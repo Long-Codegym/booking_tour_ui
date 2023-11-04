@@ -25,7 +25,6 @@ const loadingData = (acc) => {
                     <th scope="col">UserName</th>
                     <th scope="col">PassWord</th>
                     <th scope="col">FullName</th>
-                    <th scope="col">Avatar</th>
                     <th scope="col">Email</th>
                     {/*<th scope="col">Address</th>*/}
                     {/*<th scope="col">Balance</th>*/}
@@ -44,7 +43,6 @@ const loadingData = (acc) => {
                         <td>{acc.username}</td>
                         <td>{acc.password}</td>
                         <td>{acc.fullName}</td>
-                        <td>{acc.avatar}</td>
                         <td>{acc.email}</td>
                         {/*<td>{acc.address}</td>*/}
                         {/*<td>{acc.balance}</td>*/}

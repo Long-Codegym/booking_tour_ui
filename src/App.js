@@ -11,7 +11,7 @@ import HomeAdmin from "./admin/HomeAdmin";
 import ShowAcc from "./admin/ShowAcc";
 
 function App() {
-    const user = localStorage.getItem("account");
+    const user = JSON.parse(localStorage.getItem("account"));
     return (
         <>
             <Routes>
@@ -23,12 +23,11 @@ function App() {
                     <Route path={"/detail/:id"} element={<DetailTour/>}/>
                     <Route path={"/createTour/:id"} element={<CreateTour/>}/>
                 </Route>
-                {/*{user&&user.role.name ==="ROLE_ADMIN"?*/}
-                <Route path={"/home_admin"} element={<HomeAdmin/>}>
-                    <Route path={""} element={<ShowAcc/>}/>
-                </Route>
-
-                {/*:<></>}*/}
+                {user && user.role.name === "ROLE_ADMIN" ?
+                    <Route path={"/home_admin"} element={<HomeAdmin/>}>
+                        <Route path={""} element={<ShowAcc/>}/>
+                    </Route>
+                    : <></>}
             </Routes>
         </>
     );

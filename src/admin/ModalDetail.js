@@ -2,6 +2,7 @@ import ReactDOM from 'react-dom';
 import {useEffect, useState} from "react";
 import {useSelector} from "react-redux";
 import axios from "axios";
+import Swal from "sweetalert2";
 
 const ModalDetail = ({isShowing, hide, userDetail}) => {
     const [acc, setAcc] = useState(userDetail)
@@ -20,7 +21,15 @@ const ModalDetail = ({isShowing, hide, userDetail}) => {
         });
     };
     const submit = () => {
-        axios.post('http://localhost:8080/accounts/editAccount/' + idAdmin, acc).then()
+        axios.post(`http://localhost:8080/accounts/editAccount?id=${idAdmin}`, acc).then(data=>{
+            console.log(data)
+            Swal.fire({
+                position: 'center',
+                icon: 'success',
+                title: data.data.message
+            });
+        });
+        hide()
     }
 
     useEffect(() => {
