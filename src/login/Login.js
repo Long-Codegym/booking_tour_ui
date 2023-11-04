@@ -142,11 +142,11 @@ function Login() {
                                             <p><span>Đăng ký người dùng</span></p>
                                         </a>
                                     </div>
-                                    <div className={"col-md-6"}>
-                                        <a className="create-new" href={"/registerCCDV"}>
-                                            <p><span>Đăng ký cung cấp dịch vụ</span></p>
-                                        </a>
-                                    </div>
+                                    {/*<div className={"col-md-6"}>*/}
+                                    {/*    <a className="create-new" href={"/registerCCDV"}>*/}
+                                    {/*        <p><span>Đăng ký cung cấp dịch vụ</span></p>*/}
+                                    {/*    </a>*/}
+                                    {/*</div>*/}
                                 </div>
                             </div>
 

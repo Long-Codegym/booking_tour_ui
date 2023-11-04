@@ -1,0 +1,206 @@
+/* Màu nền và màu chữ cho tab đã chọn */
+.nav-tabs > li.active > a,
+.nav-tabs > li.active > a:hover {
+    color: #fff;
+    border-top-left-radius: 5px;
+    border-top-right-radius: 5px;
+}
+
+/* Màu nền và màu chữ cho tab khi hover */
+.nav-tabs > li > a:hover {
+    background-color: #eee;
+    color: #337ab7; /* Màu chữ thay đổi khi hover */
+}
+
+/* Điều chỉnh font chữ và kích thước chữ của tab */
+.nav-tabs > li > a {
+    font-size: 16px;
+    font-weight: bold;
+    text-transform: uppercase;
+    border: 1px solid #ddd;
+    border-radius: 5px;
+    padding: 10px 15px;
+    margin-right: 10px;
+    transition: all 0.3s; /* Tạo hiệu ứng chuyển đổi mượt mà */
+}
+.nav-tabs {
+    display: flex;
+}
+/* Căn giữa danh sách tab */
+#tour-tab {
+
+    border-radius: 5px;
+    padding: 10px;
+    text-align: center;
+    margin: 0 auto;
+}
+
+/* Màu chữ của tab */
+#tour-tab a {
+    color: #333;
+    text-decoration: none;
+}
+
+/* Hiệu ứng hover khi di chuột vào tab */
+#tour-tab a:hover {
+    text-decoration: none;
+    background-color: #eee; /* Màu nền khi hover */
+    color: #337ab7; /* Màu chữ khi hover */
+}
+
+.image-gallery {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: space-between;
+}
+
+.image-item {
+    flex-basis: calc(33.33% - 20px); /* Đảm bảo 3 cột trên mỗi hàng, giảm 20px cho lề */
+    margin-bottom: 20px;
+}
+
+
+
+
+/* Định dạng chung cho bảng */
+.table_style {
+    width: 100%;
+    border-collapse: collapse;
+}
+
+/* Định dạng cho tiêu đề bảng */
+.table_style th {
+    background-color: #f5f5f5;
+    text-align: center;
+    padding: 10px;
+    border: 1px solid #ddd;
+}
+
+/* Định dạng cho cột STT */
+.table_style th:first-child {
+    width: 5%;
+}
+
+/* Định dạng cho cột Khách sạn */
+.table_style th:nth-child(2) {
+    width: 16%;
+}
+
+/* Định dạng cho cột Giá người lớn và Giá trẻ em */
+.table_style th:nth-child(3),
+.table_style th:nth-child(4) {
+    width: 17%;
+}
+
+/* Định dạng cho cột Suất ăn */
+.table_style th:nth-child(5) {
+    width: 17%;
+}
+
+/* Định dạng cho cột Hành động */
+.table_style th:nth-child(6) {
+    width: 15%;
+}
+
+/* Định dạng cho dòng trong tbody */
+.table_style tbody tr {
+    background-color: #fff;
+    text-align: center;
+    border: 1px solid #ddd;
+}
+
+/* Định dạng cho cột STT trong tbody */
+.table_style tbody tr td:first-child {
+    width: 5%;
+}
+
+/* Định dạng cho cột Khách sạn trong tbody */
+.table_style tbody tr td:nth-child(2) {
+    width: 16%;
+}
+
+/* Định dạng cho cột Giá người lớn và Giá trẻ em trong tbody */
+.table_style tbody tr td:nth-child(3),
+.table_style tbody tr td:nth-child(4) {
+    width: 17%;
+}
+
+/* Định dạng cho cột Suất ăn trong tbody */
+.table_style tbody tr td:nth-child(5) {
+    width: 17%;
+}
+
+/* Định dạng cho cột Hành động trong tbody */
+.table_style tbody tr td:nth-child(6) {
+    width: 15%;
+}
+
+/* Định dạng cho nút Đặt ngay */
+.btn-tour {
+    background-color: #86B817;
+    color: #fff;
+    border: none;
+    padding: 5px 10px;
+    text-align: center;
+    text-decoration: none;
+    display: inline-block;
+    cursor: pointer;
+    border-radius: 5px;
+}
+
+/* Định dạng cho nút Đặt ngay khi hover */
+.btn-tour:hover {
+    background-color: #0056b3;
+}
+
+/*css hiển thị tour*/
+.tour-container {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(33.33%, 1fr));
+    gap: 10px; /* Khoảng cách giữa các tour */
+}
+
+.tour-item {
+    border: 1px solid #ccc; /* Thêm viền cho từng tour */
+    padding: 10px; /* Khoảng cách bên trong mỗi tour */
+    box-sizing: border-box; /* Đảm bảo khoảng cách tính cả padding */
+}
+/* CSS cho thanh sidebar */
+
+
+
+/* Sidebar container */
+.sidebar {
+    padding: 10px;
+    border: 1px solid #ccc;
+    margin-bottom: 10px;
+    width: 250px;
+}
+
+.sidebar p {
+    font-weight: bold;
+    margin-bottom: 10px;
+}
+
+select {
+    width: 100%;
+    padding: 5px;
+}
+
+label {
+    display: block;
+    margin-bottom: 5px;
+}
+
+input[type="radio"] {
+    margin-right: 5px;
+}
+
+/* Style selected radio buttons */
+input[type="radio"]:checked + label {
+    background-color: #007BFF;
+    color: #fff;
+    padding: 5px;
+    border-radius: 5px;
+}
+

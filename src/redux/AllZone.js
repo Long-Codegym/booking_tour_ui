@@ -1,11 +1,14 @@
 import {createSlice} from "@reduxjs/toolkit";
 import {allZone} from "../service/zoneService";
-import {getAllToursById, getAllToursByZone, getToursById} from "../service/toursService";
+import {getAllCity, getAllSupplies, getAllToursByZone, getTourByFilter, getToursById} from "../service/toursService";
 const initialState = {
     zone: {
         allZone: [],
         allTourByZone: [],
-        tour:{}
+        tour:{},
+        tourByFilter:[],
+        supplies:[],
+        city:[]
     }
 }
 const AllZone = createSlice ({
@@ -21,6 +24,17 @@ const AllZone = createSlice ({
         })
         builder.addCase(getToursById.fulfilled, (state, action) => {
             state.zone.tour = action.payload;
+        })
+        builder.addCase(getTourByFilter.fulfilled, (state, action) => {
+            state.zone.tourByFilter = action.payload;
+        })
+        builder.addCase(getAllSupplies.fulfilled, (state, action) => {
+            state.zone.supplies = action.payload;
+            console.log(state.zone.supplies = action.payload)
+        })
+        builder.addCase(getAllCity.fulfilled, (state, action) => {
+            state.zone.city = action.payload;
+            console.log(state.zone.city = action.payload)
         })
     }
 })

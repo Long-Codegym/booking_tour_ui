@@ -4,12 +4,14 @@ import {allZone} from "../service/zoneService";
 import Zone from "./Zone";
 import PopularTours from "./PopularTours";
 import {getAllAccByAdmin} from "../service/accountService";
+import {getAllSupplies} from "../service/toursService";
 
 const Home =()=>{
     const dispatch = useDispatch();
     const user=localStorage.getItem("account");
     useEffect(()=>{
         dispatch(allZone())
+        dispatch(getAllSupplies())
     },[])
     return (
         <>
