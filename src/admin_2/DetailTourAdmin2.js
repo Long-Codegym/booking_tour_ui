@@ -1,23 +1,25 @@
-import {useEffect, useState} from "react";
-import axios from "axios";
 import {useDispatch, useSelector} from "react-redux";
 import {Link, useLocation} from "react-router-dom";
-import {getToursById} from "../service/toursService";
+import React, {useEffect, useState} from "react";
+import {addImg, addTour, getAllCity, getAllSupplies, getToursById} from "../service/toursService";
+import Swal from "sweetalert2";
+import {useNavigate} from "react-router";
 
-const DetailTour = () => {
-    // const {tour, setTour} = useState([]);
-    // const{id}=useState();
-    // console.log(id)
-    // useEffect(() => {
-    //     axios.get(`http://localhost:8080/tours/?id=${id}` ).then(response => {
-    //         setTour(response.data)
-    //     })
-    // }, []);
+const DetailTourAdmin2 = () => {
+    const navigate = useNavigate();
     const dispatch = useDispatch();
     const location = useLocation();
-    const encodedZone = location.pathname.split("/detail/")[1];
+    const encodedZone = location.pathname.split("/detailTour/")[1];
     const idTour = decodeURIComponent(encodedZone);
     const [page, setPage] = useState(1);
+    const [add,setAdd]=useState(false);
+
+    const [imgs, setImgs] = useState({
+        img:'',
+        tour:{
+            id:''
+        }
+    })
 
     useEffect(() => {
         dispatch(getToursById(idTour))
@@ -37,6 +39,42 @@ const DetailTour = () => {
     const loadImages = () => {
         setVisibleImages(prevVisibleImages => prevVisibleImages - 6)
     };
+
+    const handleAddTour = (event) => {
+        event.preventDefault();
+        setAdd(true);
+        const img = event.target.img.value;
+        // const id = idTour;
+        if (img) {
+            const updatedImgTour = {
+                ...imgs,
+                img,
+                tour: {id: idTour}
+            }
+            setImgs(updatedImgTour);
+        }
+
+    }
+    useEffect(() => {
+        if (add) {
+            dispatch(addImg(imgs))
+        .then(() => {
+            dispatch(getToursById(idTour))
+                    Swal.fire({
+                        position: 'center',
+                        icon: 'success',
+                        title: 'Up ảnh thành công.',
+                        showConfirmButton: false,
+                        timer: 1500
+                    }).then(() => {
+                        navigate("/detailTour/" +idTour);
+                    });
+                });
+            setAdd(false);
+        }
+    }, [imgs]);
+    console.log(imgs)
+
     return (
 
         <>
@@ -124,7 +162,7 @@ const DetailTour = () => {
                                     </div>
                                 </div>
                                 <Link to={"/bookingTour/" +tour.tour.id}>
-                                <a class="btn btn-primary py-3 px-5 mt-2" href="">Đặt Tour</a>
+                                    <a class="btn btn-primary py-3 px-5 mt-2" href="">Đặt Tour</a>
                                 </Link>
                             </div>
                         </div>
@@ -160,9 +198,9 @@ const DetailTour = () => {
                                 </td>
                                 <td data-th="Hành động" className="center">
                                     <Link to={"/bookingTour/" + tour.tour.id}>
-                                    <a target="_blank" className="btn-tour btn-tour__pro" href="booking/243/76">
-                                        Đặt ngay
-                                    </a>
+                                        <a target="_blank" className="btn-tour btn-tour__pro" href="booking/243/76">
+                                            Đặt ngay
+                                        </a>
                                     </Link>
                                 </td>
                             </tr>
@@ -198,6 +236,15 @@ const DetailTour = () => {
                                         onClick={loadImages}>
                                     Thu ngọn
                                 </button>
+                                <form onSubmit={(event)=>handleAddTour(event)}>
+                                <label htmlFor="img" style={{fontSize: "25px", marginTop: "50px"}}>Thêm ảnh</label>
+                                <input required={"ko được để chống"} type="text" id="img" name="img" accept="image/png, image/jpeg, image/jpg" multiple="multiple"/>
+                                <button className="btn-17" style={{marginLeft: "10px",width:"100px", borderRadius: "10px"}}>
+                                        <span className="text-container">
+                                             <span className="text">Thêm</span>
+                                         </span>
+                                 </button>
+                                </form>
                             </div>}
                         </div>
                     }
@@ -398,5 +445,5 @@ const DetailTour = () => {
                 }
             </div>
         </>)
-};
-export default DetailTour;
+}
+export default DetailTourAdmin2;

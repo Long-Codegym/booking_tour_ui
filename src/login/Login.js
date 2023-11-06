@@ -5,6 +5,7 @@ import {useEffect, useState} from "react";
 import Swal from "sweetalert2";
 import {useDispatch} from "react-redux";
 import LoginService from "../service/login";
+import {Link} from "react-router-dom";
 
 function Login() {
     // const [loadScript, setLoadScript] = useState(false);
@@ -95,10 +96,13 @@ function Login() {
                 <div className="wrapper">
                     <div className="container">
                         <div className="row login-page">
-                            <div className="col-md-7 hidden-sm hidden-xs image-login">
-                                <img style={{height: '100%', borderRadius: '8px', boxShadow: '5px 5px 7px 0'}}
+                            <div className="col-md-7 hidden-sm hidden-xs image-login" >
+                                <a href={"/"}>
+                                <img  style={{height: '100%', borderRadius: '8px', boxShadow: '5px 5px 7px 0'}}
                                      src="/img_demo/phu_quoc.jpg" className=""
                                      alt="PD"/>
+                                </a>
+
                             </div>
                             <div className="content-main" style={{width: '450px', border: '1px', borderRadius: '8px', backgroundColor: '#fff', padding: '20px', boxShadow: '5px 5px 7px 0'}}>
                                 <h3 style={{color: '#f0564a'}}>Du lịch mọi nơi</h3>

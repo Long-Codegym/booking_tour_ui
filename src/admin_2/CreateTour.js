@@ -1,8 +1,11 @@
 import { useDispatch, useSelector } from "react-redux";
 import React, { useEffect, useState } from "react";
 import { addTour, getAllCity, getAllSupplies } from "../service/toursService";
+import Swal from "sweetalert2";
+import {useNavigate} from "react-router";
 
 const CreateTour = () => {
+    const navigate = useNavigate();
     const accountData = localStorage.getItem("account");
     const [tourTimes, setTourTime] = useState(0);
     const [imageURL, setImageURL] = useState("");
@@ -66,11 +69,11 @@ const CreateTour = () => {
     });
 
     const handleImageUpload = (event) => {
-        const file = event.target.files[0];
-        if (file) {
-            const imageURL = URL.createObjectURL(file);
-            setImageURL(imageURL);
-        }
+        const file = event.target.value;
+        // if (file) {
+        //     const imageURL = URL.createObjectURL(file);
+        //     setImageURL(imageURL);
+        // }
     };
 
     const handleAddTour = (event) => {
@@ -88,10 +91,10 @@ const CreateTour = () => {
             .filter((checkbox) => checkbox.checked)
             .map((checkbox) => checkbox.value);
 
-        const imgFile = event.target.img.files[0];
-        if (imgFile) {
+        const imgFile = event.target.img.value;
+        if (imgFile && name && price && tourTime) {
             const imgPath = `/img_demo/${imgFile.name}`;
-            const imgURL = process.env.PUBLIC_URL + imgPath;
+            // const imgURL = process.env.PUBLIC_URL + imgPath;
 
             const updatedCreateTour = {
                 ...createTour,
@@ -101,7 +104,7 @@ const CreateTour = () => {
                 tourTime,
                 discount,
                 account: { id: idAccount },
-                img: imgURL,
+                img: imgFile,
                 describes,
                 city: { id: cityId },
                 supplies,
@@ -134,8 +137,19 @@ const CreateTour = () => {
     useEffect(() => {
         dispatch(getAllSupplies());
         dispatch(getAllCity());
-        if(add){
-            dispatch(addTour(obj));
+        if (add) {
+            dispatch(addTour(obj))
+                .then(() => {
+                    Swal.fire({
+                        position: 'center',
+                        icon: 'success',
+                        title: 'Đăng Tour thành công.',
+                        showConfirmButton: false,
+                        timer: 1500
+                    }).then(() => {
+                        navigate("/");
+                    });
+                });
             setAdd(false);
         }
     }, [obj]);
@@ -195,7 +209,7 @@ const CreateTour = () => {
                         <input type="text" id="convenientWard" name="convenientWard" />
 
                         <label htmlFor="tourTime">Thời gian Tour (ngày):</label>
-                        <input type="number" id="tourTime" name="tourTime" onChange={handleTourTimeChange} />
+                        <input required type="number" id="tourTime" name="tourTime" onChange={handleTourTimeChange} />
 
                         {/*<label htmlFor="schedule">Lịch trình:</label>*/}
                         {/*<textarea id="schedule" name="schedule" defaultValue={""} />*/}
@@ -205,10 +219,10 @@ const CreateTour = () => {
                     </td>
                     <td>
                         <label htmlFor="discount">Giảm giá:</label>
-                        <input type="number" id="discount" name="discount" />
+                        <input required type="number" id="discount" name="discount" />
 
                         <label htmlFor="img">Hình ảnh:</label>
-                        <input type="file" id="img" name="img" accept="image/png, image/jpeg, image/jpg" multiple="multiple" onChange={handleImageUpload} />
+                        <input required type="text" id="img" name="img" accept="image/png, image/jpeg, image/jpg" multiple="multiple" onChange={handleImageUpload} />
 
                         <label htmlFor="city">Thành phố:</label>
                         <select id="city" name="city">

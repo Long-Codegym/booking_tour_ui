@@ -11,6 +11,10 @@ import CreateTourTest from "./admin_2/CreateTourTest";
 import BookingTour from "./home/BookingTour";
 import HomeAdmin from "./admin/HomeAdmin";
 import ShowAcc from "./admin/ShowAcc";
+import ListTourByIdAccount from "./admin_2/ListTourByIdAccount";
+import DetailTourAdmin2 from "./admin_2/DetailTourAdmin2";
+import BillCCTour from "./admin_2/BillCCTour";
+import BillUser from "./user/BillUser";
 
 function App() {
     // const user =JSON.parse(localStorage.getItem("account"));
@@ -26,6 +30,10 @@ function App() {
               <Route path={"/create"} element={<CreateTour/>}/>
               <Route path={"/creates"} element={<CreateTourTest/>}/>
               <Route path={"/bookingTour/:id"} element={<BookingTour/>}/>
+              <Route path={"/lisTour"} element={<ListTourByIdAccount/>}/>
+              <Route path={"/detailTour/:id"} element={<DetailTourAdmin2/>}/>
+              <Route path={"/billAcc"} element={<BillCCTour/>}/>
+              <Route path={"/billUser"} element={<BillUser/>}/>
             </Route>
           {/*{user&&user.role.name ==="ROLE_ADMIN"?*/}
           <Route path={"/home_admin"} element={<HomeAdmin/>}>

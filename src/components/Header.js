@@ -1,6 +1,22 @@
 import {Link} from "react-router-dom";
+import {useState} from "react";
+import {useNavigate} from "react-router";
+import LoginService from "../service/login";
 
 const Header = () =>{
+    const navigate = useNavigate();
+    const [acc, setAcc] = useState(() => {
+        try {
+            return JSON.parse(localStorage.getItem("account"))
+        } catch (e) {
+            return {};
+        }
+    });
+    const handleClick = (e) => {
+        LoginService.logout().then(r => {
+            navigate("/login");
+        });
+    };
     return (
         <>
             <meta charSet="utf-8" />
@@ -26,17 +42,6 @@ const Header = () =>{
             <link href="../resources/css/uli_li.css" rel="stylesheet" />
             {/* Template Stylesheet */}
             <link href="../resources/css/style.css" rel="stylesheet" />
-            {/* Spinner Start */}
-            {/*<div id="spinner" className="show bg-white position-fixed translate-middle w-100 vh-100 top-50 start-50 d-flex align-items-center justify-content-center">*/}
-            {/*    <div*/}
-            {/*        className="spinner-border text-primary"*/}
-            {/*        style={{ width: "3rem", height: "3rem" }}*/}
-            {/*        role="status">*/}
-            {/*        <span className="sr-only">Loading...</span>*/}
-            {/*    </div>*/}
-            {/*</div>*/}
-            {/* Spinner End */}
-            {/* Topbar Start */}
             <div className="container-fluid bg-dark px-5 d-none d-lg-block">
                 <div className="row gx-0">
                     <div className="col-lg-8 text-center text-lg-start mb-2 mb-lg-0">
@@ -94,33 +99,181 @@ const Header = () =>{
                             <a href="about.html" className="nav-item nav-link">Về chúng tôi</a>
                             <a href="service.html" className="nav-item nav-link">Dịch vụ</a>
                             <a href="package.html" className="nav-item nav-link">Tour</a>
-                            {/*<div className="nav-item dropdown">*/}
-                            {/*    <a href="#" className="nav-link dropdown-toggle" data-bs-toggle="dropdown">Pages</a>*/}
-                            {/*    <div className="dropdown-menu m-0">*/}
-                            {/*        <a href="destination.html" className="dropdown-item">*/}
-                            {/*            Destination*/}
-                            {/*        </a>*/}
-                            {/*        <a href="booking.html" className="dropdown-item">*/}
-                            {/*            Booking*/}
-                            {/*        </a>*/}
-                            {/*        <a href="team.html" className="dropdown-item">*/}
-                            {/*            Travel Guides*/}
-                            {/*        </a>*/}
-                            {/*        <a href="testimonial.html" className="dropdown-item">*/}
-                            {/*            Testimonial*/}
-                            {/*        </a>*/}
-                            {/*        <a href="404.html" className="dropdown-item">*/}
-                            {/*            404 Page*/}
-                            {/*        </a>*/}
-                            {/*    </div>*/}
-                            {/*</div>*/}
-                            {/*<a href="contact.html" className="nav-item nav-link">*/}
-                            {/*    Contact*/}
-                            {/*</a>*/}
                         </div>
+                        { (acc  && acc.id !=null && acc.role.id ===3) ?
+                        <div className="rounded-pill py-2 px-4">
+                            <div className="navbar-nav ms-auto py-0">
+                            <li className="nav-item nav-link">
+                                <a  style={{borderRadius: "10px"}} id="header-nav-dropdown" role="button" className="dropdown-toggle" aria-haspopup="true" aria-expanded="false" href="#">
+                                    <img src={acc.avatar} style={{width: "45px",height: "45px",borderRadius: "50%"}} className="avt-img" alt="PD"
+                                    />
+                                </a>
+                                <ul style={{marginLeft: "-300px"}} role="menu" className="dropdown-menu" aria-labelledby="header-nav-dropdown">
+                                    <li role="presentation" className="page-user">
+                                        <a role="menuitem" tabIndex={-1} href="#">
+                                            <img
+                                                src={acc.avatar}
+                                                className="avt-img"
+                                                alt="PD"
+                                            />
+                                            <div className="text-logo">
+                                                <h5>Tên</h5>
+                                                <p>
+                                                    Tên : {acc.fullName}<span></span>
+                                                </p>
+                                            </div>
+                                        </a>
+                                    </li>
+                                    <li role="presentation" className="menu-item hidden-lg hidden-md">
+                                        <a role="menuitem" tabIndex={-1} href="#">
+                                            <i className="fas fa-plus" /> <span>Số dư</span> :{" "}
+                                            <span className="money">{acc.balance} đ</span>
+                                        </a>
+                                    </li>
+                                    <Link to={"/billUser"}>
+                                    <li role="presentation" className="menu-item">
+                                        <a role="menuitem" tabIndex={-1} href="#">
+                                            <i className="fas fa-clock" /> <span>Lịch sử đặt Tour</span>
+                                        </a>
+                                    </li>
+                                    </Link>
+                                    <li role="presentation" className="menu-item">
+                                        <a role="menuitem" tabIndex={-1} href="#">
+                                            <i className="fas fa-cogs" /> <span>Cài đặt tài khoản</span>
+                                        </a>
+                                    </li>
+                                    <li role="presentation" className="menu-item">
+                                        <a role="menuitem" tabIndex={-1} href="#" onClick={handleClick}>
+                                            <i className="fas fa-power-off" /> <span>Đăng xuất</span>
+                                        </a>
+                                    </li>
+                                    <div className="menu-item list-flag">
+                                        <div className="box-item">
+                                            <div className="flag-all active">
+                                                <img
+                                                    src="https://files.playerduo.net/production/static-files/flag/2.png"
+                                                    className="flag flag-vn"
+                                                    alt="PD"
+                                                />
+                                            </div>
+                                        </div>
+                                        {/*<div className="box-item">*/}
+                                        {/*    <a*/}
+                                        {/*        href="https://www.facebook.com/groups/playerduovn"*/}
+                                        {/*        target="_blank"*/}
+                                        {/*        rel="noopener noreferrer"*/}
+                                        {/*    >*/}
+                                        {/*        <span>Group</span>*/}
+                                        {/*    </a>*/}
+                                        {/*    <a*/}
+                                        {/*        href="https://www.facebook.com/playerduo"*/}
+                                        {/*        target="_blank"*/}
+                                        {/*        rel="noopener noreferrer"*/}
+                                        {/*    >*/}
+                                        {/*        <span>Fanpage</span>*/}
+                                        {/*    </a>*/}
+                                        {/*</div>*/}
+                                    </div>
+                                </ul>
+                            </li>
+                            </div>
+                        </div> :
+                            (acc  && acc.id !=null && acc.role.id ===2) ?
+                                <div className="rounded-pill py-2 px-4">
+                                    <div className="navbar-nav ms-auto py-0">
+                                        <li className="nav-item nav-link">
+                                            <a  style={{borderRadius: "10px"}} id="header-nav-dropdown" role="button" className="dropdown-toggle" aria-haspopup="true" aria-expanded="false" href="#">
+                                                <img src={acc.avatar} style={{width: "45px",height: "45px",borderRadius: "50%"}} className="avt-img" alt="PD"
+                                                />
+                                            </a>
+                                            <ul style={{marginLeft: "-300px"}} role="menu" className="dropdown-menu" aria-labelledby="header-nav-dropdown">
+                                                <li role="presentation" className="page-user">
+                                                    <a role="menuitem" tabIndex={-1} href="#">
+                                                        <img
+                                                            src={acc.avatar}
+                                                            className="avt-img"
+                                                            alt="PD"
+                                                        />
+                                                        <div className="text-logo">
+                                                            <h5>Tên</h5>
+                                                            <p>
+                                                                Tên : {acc.fullName}<span></span>
+                                                            </p>
+                                                        </div>
+                                                    </a>
+                                                </li>
+                                                <li role="presentation" className="menu-item hidden-lg hidden-md">
+                                                    <a role="menuitem" tabIndex={-1} href="#">
+                                                        <i className="fas fa-plus" /> <span>Số dư</span> :{" "}
+                                                        <span className="money">{acc.balance} đ</span>
+                                                    </a>
+                                                </li>
+                                                <Link to={"/billAcc"}>
+                                                <li role="presentation" className="menu-item">
+                                                    <a role="menuitem" tabIndex={-1} href="#">
+                                                        <i className="fas fa-clock" /> <span>Các Tour đã được thuê</span>
+                                                    </a>
+                                                </li>
+                                                </Link>
+                                                <Link to={"/create"}>
+                                                <li role="presentation" className="menu-item">
+                                                    <a role="menuitem" tabIndex={-1} href="#">
+                                                        <i className="fas fa-clock" /> <span>Đăng Tour</span>
+                                                    </a>
+                                                </li>
+                                                </Link>
+                                                <Link to={"/lisTour"}>
+                                                <li role="presentation" className="menu-item">
+                                                    <a role="menuitem" tabIndex={-1} href="#">
+                                                        <i className="fas fa-clock" /> <span>Danh sách Tour</span>
+                                                    </a>
+                                                </li>
+                                                </Link>
+                                                <li role="presentation" className="menu-item">
+                                                    <a role="menuitem" tabIndex={-1} href="#">
+                                                        <i className="fas fa-cogs" /> <span>Cài đặt tài khoản</span>
+                                                    </a>
+                                                </li>
+                                                <li role="presentation" className="menu-item">
+                                                    <a role="menuitem" tabIndex={-1} href="#" onClick={handleClick}>
+                                                        <i className="fas fa-power-off" /> <span>Đăng xuất</span>
+                                                    </a>
+                                                </li>
+                                                <div className="menu-item list-flag">
+                                                    <div className="box-item">
+                                                        <div className="flag-all active">
+                                                            <img
+                                                                src="https://files.playerduo.net/production/static-files/flag/2.png"
+                                                                className="flag flag-vn"
+                                                                alt="PD"
+                                                            />
+                                                        </div>
+                                                    </div>
+                                                    {/*<div className="box-item">*/}
+                                                    {/*    <a*/}
+                                                    {/*        href="https://www.facebook.com/groups/playerduovn"*/}
+                                                    {/*        target="_blank"*/}
+                                                    {/*        rel="noopener noreferrer"*/}
+                                                    {/*    >*/}
+                                                    {/*        <span>Group</span>*/}
+                                                    {/*    </a>*/}
+                                                    {/*    <a*/}
+                                                    {/*        href="https://www.facebook.com/playerduo"*/}
+                                                    {/*        target="_blank"*/}
+                                                    {/*        rel="noopener noreferrer"*/}
+                                                    {/*    >*/}
+                                                    {/*        <span>Fanpage</span>*/}
+                                                    {/*    </a>*/}
+                                                    {/*</div>*/}
+                                                </div>
+                                            </ul>
+                                        </li>
+                                    </div>
+                                </div> :
                         <a href="/login" className="btn btn-primary rounded-pill py-2 px-4">
                             Đăng nhập
                         </a>
+                        }
                     </div>
                 </nav>
                 <div className="container-fluid bg-primary py-5 mb-5 hero-header">
@@ -132,12 +285,6 @@ const Header = () =>{
                                 </h1>
                                 <p className="fs-4 text-white mb-4 animated slideInDown">
                                 </p>
-                                {/*<div className="position-relative w-75 mx-auto animated slideInDown">*/}
-                                {/*    <input className="form-control border-0 rounded-pill w-100 py-3 ps-4 pe-5" type="text" placeholder="Eg: Thailand"/>*/}
-                                {/*    <button type="button" className="btn btn-primary rounded-pill py-2 px-4 position-absolute top-0 end-0 me-2" style={{ marginTop: 7 }}>*/}
-                                {/*        Search*/}
-                                {/*    </button>*/}
-                                {/*</div>*/}
                             </div>
                         </div>
                     </div>

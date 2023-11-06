@@ -3,7 +3,7 @@ import {useDispatch} from "react-redux";
 import {allZone} from "../service/zoneService";
 import Zone from "./Zone";
 import PopularTours from "./PopularTours";
-import {getAllSupplies} from "../service/toursService";
+import {getAllSupplies, tourByMonth} from "../service/toursService";
 import {getAllAccByAdmin} from "../service/accountService";
 
 const Home =()=>{
@@ -11,6 +11,7 @@ const Home =()=>{
     useEffect(()=>{
         dispatch(allZone())
         dispatch(getAllSupplies())
+        dispatch(tourByMonth())
     },[])
     return (
         <>
