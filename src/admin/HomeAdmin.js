@@ -9,7 +9,6 @@ import HeaderAdmin from "./HeaderAdmin";
 const HomeAdmin = () => {
     const dispatch = useDispatch();
     const idAdmin = JSON.parse(localStorage.getItem("account"));
-
     useEffect(() => {
         dispatch(getAllAccByAdmin(idAdmin.id));
         dispatch(getAllRole());
@@ -20,7 +19,6 @@ const HomeAdmin = () => {
     return (<>
         <div className="wrapper">
             <div className="home-flex">
-
                 <HeaderAdmin/>
                 <Outlet/>
             </div>

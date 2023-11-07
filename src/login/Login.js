@@ -122,9 +122,7 @@ function Login() {
                                             <Field type="password" id="password" name="password" maxLength={50} autoComplete="false" />
                                             <ErrorMessage name="password" />
                                         </div>
-                                        {/*<p className="forgot-password">*/}
-                                        {/*    <a href="src/pages/login/Login#"><span>Quên mật khẩu?</span></a>*/}
-                                        {/*</p>*/}
+
                                         <button type="submit"><span>Đăng nhập</span></button>
                                     </Form>
 

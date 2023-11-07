@@ -10,7 +10,7 @@ const ShowAcc = () => {
     const {isShowing, toggle} = useModal();
     const [acc,setAcc]=useState([])
     useEffect(() => {
-        console.log(allAcc)
+
     }, []);
 const loadingData = (acc) => {
   setAcc(acc)
