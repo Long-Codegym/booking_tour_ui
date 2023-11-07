@@ -3463,7 +3463,7 @@ textarea.form-control-lg {
     padding: .5rem 0;
     margin: 0;
     font-size: 1rem;
-    color: #808B8D;
+    /*color: #808B8D;*/
     text-align: left;
     list-style: none;
     background-color: #fff;

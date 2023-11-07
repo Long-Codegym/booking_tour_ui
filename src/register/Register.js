@@ -19,7 +19,7 @@ const validationSchema = Yup.object().shape({
         .required('Nhập lại mật khẩu là bắt buộc'),
     email: Yup.string().email('Email không hợp lệ').required('Email là bắt buộc'),
     nickName: Yup.string().required('Tên người dùng là bắt buộc'),
-    address:Yup.string().required("Địa chỉ là bắt buộc")
+    address: Yup.string().required('Địa chỉ là bắt buộc'),
 });
 const Register = () => {
     const [message, setMessage] = useState('');
@@ -141,7 +141,7 @@ const Register = () => {
                                         confirmPassword: '',
                                         email: '',
                                         nickName: '',
-                                        address:''
+                                        address: '',
                                     }}
                                     validationSchema={validationSchema}
                                     onSubmit={(values, actions) => {
@@ -158,7 +158,7 @@ const Register = () => {
                                                     await Swal.fire({
                                                         position: 'center',
                                                         icon: 'success',
-                                                        title: 'Đăng kí thành công, kiểm tra email để xác minh tài khoản.',
+                                                        title: 'Đăng kí thành công.',
                                                         showConfirmButton: false,
                                                         timer: 1500
                                                     });
@@ -260,9 +260,9 @@ const Register = () => {
                                             <div className="fieldGroup" style={{ display: 'flex',height:'70px' }}>
                                                 <div className="input-wrapper"  style={{width:'50%', fontSize: '14px', color:'red'}}>
                                                     <Field
-                                                        type="password"
-                                                        name="password"
-                                                        placeholder="Mật khẩu"
+                                                        type="text"
+                                                        name="address"
+                                                        placeholder="Địa chỉ"
                                                         maxLength="5000"
                                                         autoComplete="false"
                                                         style={{
@@ -273,10 +273,10 @@ const Register = () => {
                                                             outline: 'none', width:'250px'
                                                         }}
                                                     />
-                                                    <ErrorMessage name="password" component="div" className="error" />
+                                                    <ErrorMessage name="address" component="div" className="error" />
                                                 </div>
 
-                                                <div className="register-verify-email"  style={{fontSize: '14px', color:'red',height:'70px'}}>
+                                                <div className="register-verify-email"  style={{marginLeft: '136px', fontSize: '14px', color:'red',height:'70px'}}>
                                                 <div className="fieldGroup">
 
                                                     <Field type="email" name="email" placeholder="Email" maxLength="5000" autoComplete="false" onFocus={resetMessage} style={{marginLeft:'150px',textAlign: 'center', borderRadius: '7px', padding: '7px', margin: '10px', outline: 'none', width:'250px'}}

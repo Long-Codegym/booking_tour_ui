@@ -114,3 +114,27 @@ export const tourByMonth = createAsyncThunk(
         return res.data;
     }
 )
+export const sendReview = createAsyncThunk(
+    "sendReview",
+    async (review) => {
+        const res = await customAxios.post(`reviews/sendReview`, review,{headers: {Authorization: "Bearer " + localStorage.getItem("token")}});
+        return res.data;
+    }
+)
+export const getAllReviewsByTourId = createAsyncThunk(
+    "getAllReviewsByTourId",
+    async (tourId) => {
+        const res = await customAxios.get("reviews/allActiveByTourId/" + tourId,{headers: {Authorization: "Bearer " + localStorage.getItem("token")}});
+        console.log(res.data);
+        return res.data;
+    }
+)
+
+export const isAbleToReview = createAsyncThunk(
+    "isAbleToReview",
+    async (ids) => {
+        const {tourId, userId} = ids;
+        const res = await customAxios.get(`reviews/isAbleToReview?tourId=${tourId}&userId=${userId}`,{headers: {Authorization: "Bearer " + localStorage.getItem("token")}});
+        return res.data;
+    }
+)

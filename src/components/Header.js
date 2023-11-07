@@ -137,11 +137,13 @@ const Header = () =>{
                                         </a>
                                     </li>
                                     </Link>
+                                    <Link to={"/detailAcc"}>
                                     <li role="presentation" className="menu-item">
                                         <a role="menuitem" tabIndex={-1} href="#">
                                             <i className="fas fa-cogs" /> <span>Cài đặt tài khoản</span>
                                         </a>
                                     </li>
+                                    </Link>
                                     <li role="presentation" className="menu-item">
                                         <a role="menuitem" tabIndex={-1} href="#" onClick={handleClick}>
                                             <i className="fas fa-power-off" /> <span>Đăng xuất</span>
@@ -229,11 +231,13 @@ const Header = () =>{
                                                     </a>
                                                 </li>
                                                 </Link>
+                                                <Link to={"/detailAcc"}>
                                                 <li role="presentation" className="menu-item">
                                                     <a role="menuitem" tabIndex={-1} href="#">
                                                         <i className="fas fa-cogs" /> <span>Cài đặt tài khoản</span>
                                                     </a>
                                                 </li>
+                                                </Link>
                                                 <li role="presentation" className="menu-item">
                                                     <a role="menuitem" tabIndex={-1} href="#" onClick={handleClick}>
                                                         <i className="fas fa-power-off" /> <span>Đăng xuất</span>

@@ -3,11 +3,11 @@ import {allZone} from "../service/zoneService";
 import {
     addBill,
     allTourId, getAllBillByAcc, getAllBillByUser,
-    getAllCity,
+    getAllCity, getAllReviewsByTourId,
     getAllSupplies,
     getAllToursByZone,
     getTourByFilter,
-    getToursById, tourByMonth
+    getToursById, isAbleToReview, sendReview, tourByMonth
 } from "../service/toursService";
 const initialState = {
     zone: {
@@ -21,7 +21,9 @@ const initialState = {
         allBillByIdAcc:[],
         allBillByIdUser:[],
         dataBill:"",
-        tourByMonth: []
+        tourByMonth: [],
+        byProviderUsername:[],
+        isAble: false
     }
 }
 const AllZone = createSlice ({
@@ -61,6 +63,16 @@ const AllZone = createSlice ({
         })
         builder.addCase(tourByMonth.fulfilled,(state,action) =>{
             state.zone.tourByMonth = action.payload;
+        })
+        builder.addCase(getAllReviewsByTourId.fulfilled, (state, action) => {
+            state.zone.byProviderUsername = action.payload;
+        })
+        builder.addCase(isAbleToReview.fulfilled, (state, action) => {
+            state.zone.isAble = action.payload;
+        })
+        builder.addCase(sendReview.fulfilled, (state, action) => {
+            state.zone.byProviderUsername.unshift(action.payload);
+            state.zone.isAble = false;
         })
     }
 })

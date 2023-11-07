@@ -15,6 +15,7 @@ import ListTourByIdAccount from "./admin_2/ListTourByIdAccount";
 import DetailTourAdmin2 from "./admin_2/DetailTourAdmin2";
 import BillCCTour from "./admin_2/BillCCTour";
 import BillUser from "./user/BillUser";
+import EditAccount from "./components/EditAccount";
 
 function App() {
     // const user =JSON.parse(localStorage.getItem("account"));
@@ -34,15 +35,15 @@ function App() {
               <Route path={"/detailTour/:id"} element={<DetailTourAdmin2/>}/>
               <Route path={"/billAcc"} element={<BillCCTour/>}/>
               <Route path={"/billUser"} element={<BillUser/>}/>
+              {/*{user ?*/}
+                  <Route path={"/detailAcc"} element={<EditAccount/>}></Route> : <></>
             </Route>
-          {/*{user&&user.role.name ==="ROLE_ADMIN"?*/}
-          <Route path={"/home_admin"} element={<HomeAdmin/>}>
-              <Route path={""} element={<ShowAcc/>}/>
-          </Route>
-          {/*// :<></>}*/}
+          {/*{user && user.role.name === "ROLE_ADMIN" ?*/}
+              <Route path={"/home_admin"} element={<HomeAdmin/>}>
+                  <Route path={""} element={<ShowAcc/>}/>
+              </Route>
+              {/*: <></>}*/}
       </Routes>
     </>
-  );
-}
-
+  );}
 export default App;

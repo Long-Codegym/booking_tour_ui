@@ -2,9 +2,11 @@ import ReactDOM from 'react-dom';
 import {useEffect, useState} from "react";
 import {useSelector} from "react-redux";
 import axios from "axios";
+import Swal from "sweetalert2";
+import {useNavigate} from "react-router";
 
 const ModalDetail = ({isShowing, hide, userDetail}) => {
-    const [acc, setAcc] = useState(userDetail)
+    const [account, setAccount] = useState([])
     const allRole = useSelector(state => {
         return state.admin.admin.allRole;
     })
@@ -12,18 +14,28 @@ const ModalDetail = ({isShowing, hide, userDetail}) => {
         return state.admin.admin.allStatus;
     })
     const idAdmin = JSON.parse(localStorage.getItem("account")).id;
+    const navigate = useNavigate();
     const handleInputChange = (e, field) => {
         const newValue = e.target.value.trim();
-        setAcc({
-            ...acc,
+        setAccount({
+            ...userDetail,
             [field]: newValue
         });
     };
     const submit = () => {
-        axios.post('http://localhost:8080/accounts/editAccount/' + idAdmin, acc).then()
+        axios.post(`http://localhost:8080/accounts/editAccount?id=${idAdmin}`, account).then(data=>{
+            console.log(data)
+            Swal.fire({
+                position: 'center',
+                icon: 'success',
+                title: data.data.message
+            });
+        });
+        navigate("/home_admin")
     }
 
     useEffect(() => {
+        console.log(userDetail)
     }, []);
     return isShowing ? ReactDOM.createPortal(<>
             <div className="modal" tabIndex="-1" role="dialog" style={{display: 'block'}}>
