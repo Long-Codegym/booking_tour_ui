@@ -1,7 +1,7 @@
 import {useDispatch, useSelector} from "react-redux";
 import {useEffect, useState} from "react";
 import {useNavigate} from "react-router";
-import {cancelBill, confirmBill, getAllBillByAcc} from "../service/toursService";
+import {cancelBill, complete, confirmBill, getAllBillByAcc} from "../service/toursService";
 
 const BillCCTour = ()=> {
     const accountData = localStorage.getItem("account");
@@ -9,6 +9,7 @@ const BillCCTour = ()=> {
     const [idStatus, setIdStatus] = useState(null);
     const [idBill, setIdBill] = useState(null);
     const [idBillRecevied, setBillRecevied] = useState(null);
+    const [idBillComplete, setBillComplete] = useState(null);
     let idAccount = null;
     if (accountData) {
         try {
@@ -41,6 +42,9 @@ const BillCCTour = ()=> {
     const confirmBillBills = (idBill1) => {
         setBillRecevied(idBill1)
     };
+    const completeBillBills = (idBill1) => {
+        setBillComplete(idBill1)
+    };
     useEffect(() => {
         dispatch(cancelBill(idBill)).then(() => {
             dispatch(getAllBillByAcc({ idStatus, idAccount }));
@@ -48,7 +52,10 @@ const BillCCTour = ()=> {
         dispatch(confirmBill(idBillRecevied)).then(() => {
             dispatch(getAllBillByAcc({ idStatus, idAccount }));
         });
-    }, [idBill, idBillRecevied, idStatus, idAccount]);
+        dispatch(complete(idBillComplete)).then(() => {
+            dispatch(getAllBillByAcc({ idStatus, idAccount }));
+        });
+    }, [idBill, idBillRecevied, idStatus, idAccount,idBillComplete]);
 
     return(
         <>
@@ -88,7 +95,7 @@ const BillCCTour = ()=> {
                                     {/*<td onClick={() => {addUserChat(item.accountCCDV.username)}} style={{cursor: "pointer"}}>{item.accountCCDV.username}</td>*/}
                                     <td>{item.tour.name}</td>
                                     <td>{item.accountCC.fullName}</td>
-                                    <td>{item.accountUser.fullName}</td>
+                                    <td>{item.fullName}</td>
                                     <td>
                                         {new Date(item.dateCreate).toLocaleString()}
                                     </td>
@@ -119,6 +126,15 @@ const BillCCTour = ()=> {
                                                 <button className="action-button confirm-button" style={{margin: "0 1px 0"}}
                                                         onClick={() => confirmBillBills(item.id)}>
                                                     Xác nhận
+                                                </button>
+                                            </>
+                                        )}
+                                        {item.status.name === "confirm" && (
+                                            <>
+                                                <button
+                                                    className="action-button cancel-button" style={{margin: "0 1px 0"}}
+                                                    onClick={() => completeBillBills(item.id)}>
+                                                    Hoàn thành
                                                 </button>
                                             </>
                                         )}

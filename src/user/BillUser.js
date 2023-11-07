@@ -68,8 +68,8 @@ const BillUser=()=>{
                             <th style={{fontSize :'14px', fontWeight: 'bold'}}>Giá Tour 1 người</th>
                             <th style={{fontSize :'14px', fontWeight: 'bold'}}>Tổng tiền</th>
                             <th style={{fontSize :'14px', fontWeight: 'bold'}}>Tình trạng</th>
-                            <th style={{fontSize :'14px', fontWeight: 'bold'}}>Xem chi tiết</th>
-                            {/*<th style={{fontSize :'14px', fontWeight: 'bold'}}>Hoạt động</th>*/}
+                            {/*<th style={{fontSize :'14px', fontWeight: 'bold'}}>Xem chi tiết</th>*/}
+                            <th style={{fontSize :'14px', fontWeight: 'bold'}}>Hoạt động</th>
                         </tr>
                         </thead>
                         <tbody>
@@ -78,7 +78,7 @@ const BillUser=()=>{
                                 <tr key={item.id}>
                                     <td>{item.tour.name}</td>
                                     <td>{item.accountCC.fullName}</td>
-                                    <td>{item.accountUser.fullName}</td>
+                                    <td>{item.fullName}</td>
                                     <td>
                                         {new Date(item.dateCreate).toLocaleString()}
                                     </td>
@@ -90,14 +90,14 @@ const BillUser=()=>{
                                     <td>
                                         {item.status.name === "wait_for_confirmation" ? "Chờ xác nhận" : item.status.name === "confirm" ? "Đã nhận" : item.status.name === "complete" ? "Hoàn thành" : "Đã hủy"}
                                     </td>
-                                    <td style={{width: "150px"}}>
-                                        <button className="action-button detail-button"
-                                                style={{width: "auto"}}
-                                            // onClick={() => openBillDetail(item)}
-                                            >
-                                            xem chi tiết
-                                        </button>
-                                    </td>
+                                    {/*<td style={{width: "150px"}}>*/}
+                                    {/*    <button className="action-button detail-button"*/}
+                                    {/*            style={{width: "auto"}}*/}
+                                    {/*        // onClick={() => openBillDetail(item)}*/}
+                                    {/*        >*/}
+                                    {/*        xem chi tiết*/}
+                                    {/*    </button>*/}
+                                    {/*</td>*/}
                                     <td className="actions">
                                         {item.status.name === "wait_for_confirmation" && (
                                             <>

@@ -23,12 +23,12 @@ const PopularTours =()=>{
                                 <div className="col-lg-12 col-md-12 wow zoomIn" data-wow-delay="0.1s">
                                     <a className="position-relative d-block overflow-hidden" href="">
                                         <Link to={"/detail/" + tourMonth[0].id}>
-                                        <img className="img-fluid" src={tourMonth[0].img} alt="" />
+                                        <img className="img-fluid" style={{width : "600px"}} src={tourMonth[0].img} alt="" />
                                         </Link>
                                         <div className="bg-white text-danger fw-bold position-absolute top-0 start-0 m-3 py-1 px-2">
                                             {tourMonth[0].discount} %
                                         </div>
-                                        <div className="bg-white text-primary fw-bold position-absolute bottom-0 end-0 m-3 py-1 px-2">
+                                        <div  className="bg-white text-primary fw-bold position-absolute bottom-0 end-0 m-3 py-1 px-2">
                                             {tourMonth[0].name}
                                         </div>
                                     </a>

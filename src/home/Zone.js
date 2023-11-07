@@ -23,7 +23,7 @@ const Zone = () => {
                                     <Link to={"/tour/" + item.zone.name}>
                                     <div className="package-item">
                                         <div className="overflow-hidden">
-                                            <img className="img-fluid" src={item.zone.img} alt=""/>
+                                            <img  className="img-fluid" src={item.zone.img} alt=""/>
                                         </div>
                                         <div className="d-flex border-bottom">
                                             <small className="flex-fill text-center border-end py-2">

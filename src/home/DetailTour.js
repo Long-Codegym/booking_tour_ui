@@ -40,6 +40,7 @@ const DetailTour = () => {
     return (
 
         <>
+            <meta charSet="utf-8"/>
             <link href="/css_detail_tour/1.css" rel="stylesheet"/>
             <link href="/css_detail_tour/2.css" rel="stylesheet"/>
             <div className="container-xxl py-5">
@@ -88,7 +89,7 @@ const DetailTour = () => {
                                 <h6 className="section-title bg-white text-start text-primary pe-3">Thông tin về
                                     Tour</h6>
                                 <h1 className="mb-4">
-                                    {tour.tour.name}
+                                   Tour: {tour.tour.name}
                                 </h1>
                                 <p className="mb-4">
                                     Phương tiện {tour.tour.convenientWard}
@@ -96,17 +97,17 @@ const DetailTour = () => {
                                 <div className="row gy-2 gx-4 mb-4">
                                     <div className="col-sm-6">
                                         <p className="mb-0"><i className="fa fa-arrow-right text-primary me-2"></i>
-                                            {tour.tour.price}
+                                          Giá:  {tour.tour.price} VNĐ /1 người
                                         </p>
                                     </div>
                                     <div className="col-sm-6">
                                         <p className="mb-0"><i className="fa fa-arrow-right text-primary me-2"></i>
-                                            {tour.tour.tourTime}
+                                          Thời gian Tour:  {tour.tour.tourTime} ngày
                                         </p>
                                     </div>
                                     <div className="col-sm-6">
                                         <p className="mb-0"><i className="fa fa-arrow-right text-primary me-2"></i>
-                                            {tour.tour.schedule}
+                                          Mô tả:  {tour.tour.describes}
                                         </p>
                                     </div>
                                     <div className="col-sm-6">
@@ -114,14 +115,14 @@ const DetailTour = () => {
                                             Đã đặt: {tour.tour.bookings} Tour
                                         </p>
                                     </div>
-                                    <div className="col-sm-6">
-                                        <p className="mb-0"><i className="fa fa-arrow-right text-primary me-2"></i>chưa
-                                            biz ghi thêm gì</p>
-                                    </div>
-                                    <div className="col-sm-6">
-                                        <p className="mb-0"><i className="fa fa-arrow-right text-primary me-2"></i>chưa
-                                            biz ghi thêm gì</p>
-                                    </div>
+                                    {/*<div className="col-sm-6">*/}
+                                    {/*    <p className="mb-0"><i className="fa fa-arrow-right text-primary me-2"></i>chưa*/}
+                                    {/*        biz ghi thêm gì</p>*/}
+                                    {/*</div>*/}
+                                    {/*<div className="col-sm-6">*/}
+                                    {/*    <p className="mb-0"><i className="fa fa-arrow-right text-primary me-2"></i>chưa*/}
+                                    {/*        biz ghi thêm gì</p>*/}
+                                    {/*</div>*/}
                                 </div>
                                 <Link to={"/bookingTour/" +tour.tour.id}>
                                 <a class="btn btn-primary py-3 px-5 mt-2" href="">Đặt Tour</a>

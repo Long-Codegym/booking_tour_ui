@@ -27,6 +27,7 @@ const BookingTour = () => {
     const tour = useSelector((state) => {
         return state.zone.zone.tour;
     });
+    console.log(tour)
 
 
     const [selectedDate, setSelectedDate] = useState(null);

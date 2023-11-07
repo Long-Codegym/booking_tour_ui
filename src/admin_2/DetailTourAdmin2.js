@@ -139,7 +139,7 @@ const DetailTourAdmin2 = () => {
                                     </div>
                                     <div className="col-sm-6">
                                         <p className="mb-0"><i className="fa fa-arrow-right text-primary me-2"></i>
-                                            {tour.tour.tourTime}
+                                            {tour.tour.tourTime} Ngày
                                         </p>
                                     </div>
                                     <div className="col-sm-6">
@@ -152,14 +152,14 @@ const DetailTourAdmin2 = () => {
                                             Đã đặt: {tour.tour.bookings} Tour
                                         </p>
                                     </div>
-                                    <div className="col-sm-6">
-                                        <p className="mb-0"><i className="fa fa-arrow-right text-primary me-2"></i>chưa
-                                            biz ghi thêm gì</p>
-                                    </div>
-                                    <div className="col-sm-6">
-                                        <p className="mb-0"><i className="fa fa-arrow-right text-primary me-2"></i>chưa
-                                            biz ghi thêm gì</p>
-                                    </div>
+                                    {/*<div className="col-sm-6">*/}
+                                    {/*    <p className="mb-0"><i className="fa fa-arrow-right text-primary me-2"></i>chưa*/}
+                                    {/*        biz ghi thêm gì</p>*/}
+                                    {/*</div>*/}
+                                    {/*<div className="col-sm-6">*/}
+                                    {/*    <p className="mb-0"><i className="fa fa-arrow-right text-primary me-2"></i>chưa*/}
+                                    {/*        biz ghi thêm gì</p>*/}
+                                    {/*</div>*/}
                                 </div>
                                 <Link to={"/bookingTour/" +tour.tour.id}>
                                     <a class="btn btn-primary py-3 px-5 mt-2" href="">Đặt Tour</a>
