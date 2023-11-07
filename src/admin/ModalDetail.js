@@ -4,9 +4,10 @@ import {useSelector} from "react-redux";
 import axios from "axios";
 import Swal from "sweetalert2";
 import {useNavigate} from "react-router";
+import {forEach} from "react-bootstrap/ElementChildren";
 
 const ModalDetail = ({isShowing, hide, userDetail}) => {
-    const [account, setAccount] = useState([])
+    const [account, setAccount] = useState(userDetail)
     const allRole = useSelector(state => {
         return state.admin.admin.allRole;
     })
@@ -16,14 +17,37 @@ const ModalDetail = ({isShowing, hide, userDetail}) => {
     const idAdmin = JSON.parse(localStorage.getItem("account")).id;
     const navigate = useNavigate();
     const handleInputChange = (e, field) => {
-        const newValue = e.target.value.trim();
-        setAccount({
-            ...userDetail,
-            [field]: newValue
-        });
-    };
+            const newValue = e.target.value.trim();
+            if (field === "role") {
+                allRole.forEach(function (role) {
+                    if (role.id == newValue) {
+                        setAccount({
+                            ...userDetail,
+                            role: role
+                        })
+                    }
+                })
+            } else if (field === "status") {
+                allStatus.forEach(function (status) {
+                    if (status.id == newValue) {
+                        setAccount({
+                            ...userDetail,
+                            status: status
+                        })
+                    }
+                })
+            } else {
+                setAccount({
+                    ...userDetail,
+                    [field]: newValue
+                });
+            }
+            console.log(account)
+        }
+    ;
+
     const submit = () => {
-        axios.post(`http://localhost:8080/accounts/editAccount?id=${idAdmin}`, account).then(data=>{
+        axios.post(`http://localhost:8080/accounts/editAccount?id=${idAdmin}`, account).then(data => {
             console.log(data)
             Swal.fire({
                 position: 'center',
@@ -35,7 +59,7 @@ const ModalDetail = ({isShowing, hide, userDetail}) => {
     }
 
     useEffect(() => {
-        console.log(userDetail)
+        console.log(account)
     }, []);
     return isShowing ? ReactDOM.createPortal(<>
             <div className="modal" tabIndex="-1" role="dialog" style={{display: 'block'}}>
@@ -43,7 +67,8 @@ const ModalDetail = ({isShowing, hide, userDetail}) => {
                     <div className="modal-content">
                         <div className="modal-header">
                             <h5 className="modal-title">{userDetail.username}</h5>
-                            <button type="button" className="close" data-dismiss="modal" aria-label="Close" onClick={hide}>
+                            <button type="button" className="close" data-dismiss="modal" aria-label="Close"
+                                    onClick={hide}>
                                 <span aria-hidden="true">&times;</span>
                             </button>
                         </div>
@@ -51,7 +76,7 @@ const ModalDetail = ({isShowing, hide, userDetail}) => {
                             <div className="container-fluid">
                                 <div className="row">
                                     <div class="col-md-4">
-                                        <img src={userDetail.avatar} style={{width: '110%'}} />
+                                        <img src={userDetail.avatar} style={{width: '110%'}}/>
                                     </div>
                                     <div className="col-md-8">
                                         <p>Username :{userDetail.username} </p>
@@ -120,8 +145,8 @@ const ModalDetail = ({isShowing, hide, userDetail}) => {
                                                     style={{width: '60%', borderRadius: '6px'}}>
                                                 {allRole.length > 0 && allRole.map((role) => (
                                                         role.id === userDetail.role.id ?
-                                                            <option value={role} selected>{role.name}</option> :
-                                                            <option value={role}>{role.name}</option>
+                                                            <option value={role.id} selected>{role.name}</option> :
+                                                            <option value={role.id}>{role.name}</option>
                                                     )
                                                 )}
                                             </select>
