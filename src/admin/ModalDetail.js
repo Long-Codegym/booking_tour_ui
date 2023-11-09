@@ -39,7 +39,6 @@ const ModalDetail = ({isShowing, hide, userDetail}) => {
                     }
                 })
             } else if (field === "balance") {
-                console.log("set")
                 setAccount({
                     ...userDetail,
                     balance: newValue
@@ -171,8 +170,8 @@ const ModalDetail = ({isShowing, hide, userDetail}) => {
                                                     style={{width: '60%', borderRadius: '6px'}}>
                                                 {allStatus.length > 0 && allStatus.map((status) => (
                                                         status.id === userDetail.status.id ?
-                                                            <option value={status} selected>{status.name}</option> :
-                                                            <option value={status}>{status.name}</option>
+                                                            <option value={status.id} selected>{status.name}</option> :
+                                                            <option value={status.id}>{status.name}</option>
                                                     )
                                                 )}
                                             </select>
