@@ -140,7 +140,7 @@ const Register = () => {
                                         password: '',
                                         confirmPassword: '',
                                         email: '',
-                                        nickName: '',
+                                        fullName: '',
                                         address: '',
                                     }}
                                     validationSchema={validationSchema}

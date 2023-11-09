@@ -5,9 +5,11 @@ import axios from "axios";
 import Swal from "sweetalert2";
 import {useNavigate} from "react-router";
 import {forEach} from "react-bootstrap/ElementChildren";
+import header from "../components/Header";
+import ShowAcc from "./ShowAcc";
 
 const ModalDetail = ({isShowing, hide, userDetail}) => {
-    const [account, setAccount] = useState(userDetail)
+    const [account, setAccount] = useState([])
     const allRole = useSelector(state => {
         return state.admin.admin.allRole;
     })
@@ -36,31 +38,40 @@ const ModalDetail = ({isShowing, hide, userDetail}) => {
                         })
                     }
                 })
-            } else {
+            } else if (field === "balance") {
+                console.log("set")
                 setAccount({
                     ...userDetail,
-                    [field]: newValue
-                });
+                    balance: newValue
+                })
+            } else {
+            setAccount({
+                ...userDetail,
+                [field]: newValue
+            });
             }
-            console.log(account)
         }
     ;
-
     const submit = () => {
-        axios.post(`http://localhost:8080/accounts/editAccount?id=${idAdmin}`, account).then(data => {
-            console.log(data)
-            Swal.fire({
-                position: 'center',
-                icon: 'success',
-                title: data.data.message
+        console.log(account)
+        if (account.length == 0) {
+            hide()
+        } else {
+            axios.post(`http://localhost:8080/accounts/editAccount?id=${idAdmin}`, account, {headers: {Authorization: "Bearer " + localStorage.getItem("token")}}).then(data => {
+                Swal.fire({
+                    position: 'center',
+                    icon: 'success',
+                    title: data.data
+                });
             });
-        });
-        navigate("/home_admin")
+            navigate("/home_admin")
+        }
     }
 
     useEffect(() => {
-        console.log(account)
+        setAccount(userDetail)
     }, []);
+
     return isShowing ? ReactDOM.createPortal(<>
             <div className="modal" tabIndex="-1" role="dialog" style={{display: 'block'}}>
                 <div className="modal-dialog" role="document">
