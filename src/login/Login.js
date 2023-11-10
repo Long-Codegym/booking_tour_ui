@@ -92,8 +92,8 @@ function Login() {
             <link rel="stylesheet" type="text/css" href="/css_login/css/style.css"/>
             <title>React App</title>
             <div className="notifications-wrapper"></div>
-            <div className="main-singin-box">
-                <div className="wrapper">
+            <div className="main-singin-box" style={{ backgroundImage: 'url(/img_demo/backgr.webp)', backgroundSize: "cover" }}>
+                <div className="wrapper"  >
                     <div className="container">
                         <div className="row login-page">
                             <div className="col-md-7 hidden-sm hidden-xs image-login" >

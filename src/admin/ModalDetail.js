@@ -6,7 +6,7 @@ import Swal from "sweetalert2";
 import {useNavigate} from "react-router";
 
 const ModalDetail = ({isShowing, hide, userDetail}) => {
-    const [account, setAccount] = useState([])
+    const [account, setAccount] = useState(userDetail)
     const allRole = useSelector(state => {
         return state.admin.admin.allRole;
     })
@@ -35,7 +35,7 @@ const ModalDetail = ({isShowing, hide, userDetail}) => {
     }
 
     useEffect(() => {
-        console.log(userDetail)
+        console.log(account)
     }, []);
     return isShowing ? ReactDOM.createPortal(<>
             <div className="modal" tabIndex="-1" role="dialog" style={{display: 'block'}}>
@@ -120,8 +120,8 @@ const ModalDetail = ({isShowing, hide, userDetail}) => {
                                                     style={{width: '60%', borderRadius: '6px'}}>
                                                 {allRole.length > 0 && allRole.map((role) => (
                                                         role.id === userDetail.role.id ?
-                                                            <option value={role} selected>{role.name}</option> :
-                                                            <option value={role}>{role.name}</option>
+                                                            <option value={role.id} selected>{role.name}</option> :
+                                                            <option value={role.id}>{role.name}</option>
                                                     )
                                                 )}
                                             </select>
