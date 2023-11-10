@@ -8,13 +8,14 @@ const ShowAcc = () => {
         return state.admin.admin.allAccount;
     })
     const {isShowing, toggle} = useModal();
-    const [acc,setAcc]=useState([])
+    const [acc, setAcc] = useState([])
     useEffect(() => {
 
     }, []);
-const loadingData = (acc) => {
-  setAcc(acc)
-}
+
+    const loadingData = (acc) => {
+        setAcc(acc)
+    }
 
     return (<>
         <div className="m-5">
@@ -38,7 +39,9 @@ const loadingData = (acc) => {
                 </thead>
                 <tbody>
                 {allAcc.length > 0 && allAcc.map((acc) => (
-                    <tr onClick={()=>{loadingData(acc)}} >
+                    <tr onClick={() => {
+                        loadingData(acc)
+                    }}>
                         <td scope="row">{acc.id}</td>
                         <td>{acc.username}</td>
                         <td>{acc.password}</td>
@@ -49,14 +52,14 @@ const loadingData = (acc) => {
                         {/*<td>{acc.role.name}</td>*/}
                         {/*<td>{acc.status.name}</td>*/}
                         {/*<td>{acc.isActive}</td>*/}
-                        <td onClick={toggle} >Edit</td>
+                        <td onClick={toggle}>Edit</td>
 
                     </tr>
                 ))}
                 </tbody>
             </table>
         </div>
-        { allAcc? <ModalDetail isShowing={isShowing} hide={toggle} userDetail={acc} />:<></>}
+        {allAcc ? <ModalDetail isShowing={isShowing} hide={toggle} userDetail={acc}/> : <></>}
 
     </>)
 }

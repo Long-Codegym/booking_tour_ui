@@ -1,4 +1,4 @@
-import {useState} from "react";
+import {useEffect, useState} from "react";
 import {id} from "date-fns/locale";
 import {useSelector} from "react-redux";
 import axios from "axios";
@@ -11,14 +11,18 @@ const EditAccount = () => {
     const [active, setActive] = useState(null);
     const [account, setAccount] = useState([]);
     const navigate = useNavigate();
-    const allRole = useSelector(state => {
-        return state.admin.admin.allRole;
-    })
-    const allStatus = useSelector(state => {
-        return state.admin.admin.allStatus;
-    })
+    const [pass, setPass] = useState(['']);
+    // const allRole = useSelector(state => {
+    //     return state.admin.admin.allRole;
+    // })
+    // const allStatus = useSelector(state => {
+    //     return state.admin.admin.allStatus;
+    // })
     const handleClick = (e) => {
         setActive(e.target.id)
+        if(e.target.id==2){
+
+        }
     };
     const handleInputChange = (e, field) => {
         const newValue = e.target.value.trim();
@@ -27,6 +31,9 @@ const EditAccount = () => {
             [field]: newValue
         });
     };
+    useEffect(() => {
+
+    }, []);
     const submit = () => {
         console.log(account)
         axios.post(`http://localhost:8080/accounts/editAccount?id=-1`, account).then(data => {
@@ -45,6 +52,7 @@ const EditAccount = () => {
             border: 'black',
         }}>
             <div className="row">
+
                 <div className="col-3">
                     <ul className="list-group ">
                         <li className={active == 0 ? "list-group-item active" : "list-group-item"} id={0}
@@ -53,12 +61,12 @@ const EditAccount = () => {
                         <li className={active == 1 ? "list-group-item active" : "list-group-item"} id={1}
                             onClick={(e) => handleClick(e)}>Thay đổi thông tin
                         </li>
-                        {/*<li className={active == 2 ? "list-group-item active" : "list-group-item"} id={2}*/}
-                        {/*    onClick={(e) => handleClick(e)}>Đổi mật khẩu*/}
-                        {/*</li>*/}
-                        <li className={active == 3 ? "list-group-item active" : "list-group-item"} id={3}
-                            onClick={(e) => handleClick(e)}>Xin Cấp quyền
+                        <li className={active == 2 ? "list-group-item active" : "list-group-item"} id={2}
+                            onClick={(e) => handleClick(e)}>Đổi mật khẩu
                         </li>
+                        {/*<li className={active == 3 ? "list-group-item active" : "list-group-item"} id={3}*/}
+                        {/*    onClick={(e) => handleClick(e)}>Xin Cấp quyền*/}
+                        {/*</li>*/}
                     </ul>
                 </div>
                 <div className="col-9">
@@ -74,10 +82,10 @@ const EditAccount = () => {
                                         style={{textTransform: 'uppercase'}}>{userDetail.username}</li>
                                     <li className="list-group-item">FullName : {userDetail.fullName}</li>
                                     <li className="list-group-item">Email : {userDetail.email} </li>
-                                    <li class="list-group-item">Address : {userDetail.address} </li>
-                                    <li class="list-group-item">Balance : {userDetail.balance} </li>
-                                    <li class="list-group-item">Role : {userDetail.role.name} </li>
-                                    <li class="list-group-item">Status : {userDetail.status.name} </li>
+                                    <li className="list-group-item">Address : {userDetail.address} </li>
+                                    <li className="list-group-item">Balance : {userDetail.balance} </li>
+                                    <li className="list-group-item">Role : {userDetail.role.name} </li>
+                                    <li className="list-group-item">Status : {userDetail.status.name} </li>
                                 </ul>
                             </div>
 
@@ -125,7 +133,7 @@ const EditAccount = () => {
                                            }}/>
                                 </div>
                                 <div style={{marginLeft:'15%'}}>
-                                    <label id={'avatar'} style={{width: '30%', color: 'black'}}>Avatar :</label>
+                                    <label id={'avatar'} style={{width: '30%', color: 'black'}}>Address :</label>
                                     <input id={'avatar'} placeholder={userDetail.avatar}
                                            onChange={(e) => handleInputChange(e, 'avatar')}
                                            style={{
@@ -142,15 +150,14 @@ const EditAccount = () => {
                             </div>
                         </div>
                     </> : <></>}
-                    {/*{active == 2 ? <>*/}
-                    {/*    <div className='row'>*/}
-                    {/*        <div className="col-md-9">hello</div>*/}
-                    {/*        <div className="col-md-1">bye</div>*/}
-                    {/*    </div>*/}
+                    {active == 2 ? <>
+                        <div className='row'>
+                            <div className="col-md-10">hello</div>
+                            <div className="col-md-1">bye</div>
+                        </div>
 
-                    {/*</> : <></>}*/}
-                    {active == 3 ? <>Updating</> : <></>}
-
+                    </> : <></>}
+                    {/*{active == 3 ? <>Updating</> : <></>}*/}
                 </div>
             </div>
         </div>

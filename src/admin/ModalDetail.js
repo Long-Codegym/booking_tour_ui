@@ -4,9 +4,12 @@ import {useSelector} from "react-redux";
 import axios from "axios";
 import Swal from "sweetalert2";
 import {useNavigate} from "react-router";
+import {forEach} from "react-bootstrap/ElementChildren";
+import header from "../components/Header";
+import ShowAcc from "./ShowAcc";
 
 const ModalDetail = ({isShowing, hide, userDetail}) => {
-    const [account, setAccount] = useState(userDetail)
+    const [account, setAccount] = useState([])
     const allRole = useSelector(state => {
         return state.admin.admin.allRole;
     })
@@ -16,34 +19,66 @@ const ModalDetail = ({isShowing, hide, userDetail}) => {
     const idAdmin = JSON.parse(localStorage.getItem("account")).id;
     const navigate = useNavigate();
     const handleInputChange = (e, field) => {
-        const newValue = e.target.value.trim();
-        setAccount({
-            ...userDetail,
-            [field]: newValue
-        });
-    };
-    const submit = () => {
-        axios.post(`http://localhost:8080/accounts/editAccount?id=${idAdmin}`, account).then(data=>{
-            console.log(data)
-            Swal.fire({
-                position: 'center',
-                icon: 'success',
-                title: data.data.message
+            const newValue = e.target.value.trim();
+            if (field === "role") {
+                allRole.forEach(function (role) {
+                    if (role.id == newValue) {
+                        setAccount({
+                            ...userDetail,
+                            role: role
+                        })
+                    }
+                })
+            } else if (field === "status") {
+                allStatus.forEach(function (status) {
+                    if (status.id == newValue) {
+                        setAccount({
+                            ...userDetail,
+                            status: status
+                        })
+                    }
+                })
+            } else if (field === "balance") {
+                setAccount({
+                    ...userDetail,
+                    balance: newValue
+                })
+            } else {
+            setAccount({
+                ...userDetail,
+                [field]: newValue
             });
-        });
-        navigate("/home_admin")
+            }
+        }
+    ;
+    const submit = () => {
+        console.log(account)
+        if (account.length == 0) {
+            hide()
+        } else {
+            axios.post(`http://localhost:8080/accounts/editAccount?id=${idAdmin}`, account, {headers: {Authorization: "Bearer " + localStorage.getItem("token")}}).then(data => {
+                Swal.fire({
+                    position: 'center',
+                    icon: 'success',
+                    title: data.data
+                });
+            });
+            navigate("/home_admin")
+        }
     }
 
     useEffect(() => {
-        console.log(account)
+        setAccount(userDetail)
     }, []);
+
     return isShowing ? ReactDOM.createPortal(<>
             <div className="modal" tabIndex="-1" role="dialog" style={{display: 'block'}}>
                 <div className="modal-dialog" role="document">
                     <div className="modal-content">
                         <div className="modal-header">
                             <h5 className="modal-title">{userDetail.username}</h5>
-                            <button type="button" className="close" data-dismiss="modal" aria-label="Close" onClick={hide}>
+                            <button type="button" className="close" data-dismiss="modal" aria-label="Close"
+                                    onClick={hide}>
                                 <span aria-hidden="true">&times;</span>
                             </button>
                         </div>
@@ -51,7 +86,7 @@ const ModalDetail = ({isShowing, hide, userDetail}) => {
                             <div className="container-fluid">
                                 <div className="row">
                                     <div class="col-md-4">
-                                        <img src={userDetail.avatar} style={{width: '110%'}} />
+                                        <img src={userDetail.avatar} style={{width: '110%'}}/>
                                     </div>
                                     <div className="col-md-8">
                                         <p>Username :{userDetail.username} </p>
@@ -135,8 +170,8 @@ const ModalDetail = ({isShowing, hide, userDetail}) => {
                                                     style={{width: '60%', borderRadius: '6px'}}>
                                                 {allStatus.length > 0 && allStatus.map((status) => (
                                                         status.id === userDetail.status.id ?
-                                                            <option value={status} selected>{status.name}</option> :
-                                                            <option value={status}>{status.name}</option>
+                                                            <option value={status.id} selected>{status.name}</option> :
+                                                            <option value={status.id}>{status.name}</option>
                                                     )
                                                 )}
                                             </select>
