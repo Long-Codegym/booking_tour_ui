@@ -11,7 +11,6 @@ const EditAccount = () => {
     const [active, setActive] = useState(null);
     const [account, setAccount] = useState([]);
     const navigate = useNavigate();
-    const [pass, setPass] = useState(['']);
     // const allRole = useSelector(state => {
     //     return state.admin.admin.allRole;
     // })
@@ -20,10 +19,16 @@ const EditAccount = () => {
     // })
     const handleClick = (e) => {
         setActive(e.target.id)
-        if(e.target.id==2){
-
-        }
     };
+    const setNewPass = (oldP,newP) => {
+      axios.get(`http://localhost:8080/accounts/setNewPass?NewPassword=${newP}&OldPassword=${oldP}`,{headers: {Authorization: "Bearer " + localStorage.getItem("token")}}).then(data => {
+          Swal.fire({
+              position: 'center',
+              icon: 'info',
+              title: data.data
+          });
+      });
+    }
     const handleInputChange = (e, field) => {
         const newValue = e.target.value.trim();
         setAccount({
@@ -142,6 +147,7 @@ const EditAccount = () => {
                                                boxShadow: '0 0 5px rgba(0,0,0,0)',
                                                width: '80%', textAlign: 'center'
                                            }}/>
+
                                 </div>
 
                                 <div style={{padding:'20px'}}>
@@ -152,7 +158,8 @@ const EditAccount = () => {
                     </> : <></>}
                     {active == 2 ? <>
                         <div className='row'>
-                            <div className="col-md-10">hello</div>
+                            <div className="col-md-10">tạo input đi
+                            </div>
                             <div className="col-md-1">bye</div>
                         </div>
 
