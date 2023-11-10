@@ -250,7 +250,8 @@ const EditAccount = () => {
                                 <h2>Thông tin cần chú ý</h2>
                                 <p>-Chỉ có thể chuyển từ người mua thành người bán. </p>
                                 <p>-Khi chuyển quyền tài khoản cần chi trả chi phí là 1 củ. </p>
-                                <button style={{backgroundColor: '#04AA6D'}} onClick={upRole}>Chuyển</button>
+                                <button className="btn btn-success"
+                                        style={{marginLeft: '20%', borderRadius: '5px',width:'150px'}} onClick={upRole}>Chuyển</button>
                             </div>
                         </div>
                         : <></>}
