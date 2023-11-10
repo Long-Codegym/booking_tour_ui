@@ -1,6 +1,14 @@
 import {createSlice} from "@reduxjs/toolkit";
 import {allZone} from "../service/zoneService";
-import {getAllCity, getAllSupplies, getAllToursByZone, getTourByFilter, getToursById} from "../service/toursService";
+import {
+    addBill,
+    allTourId, getAllBillByAcc, getAllBillByUser,
+    getAllCity, getAllReviewsByTourId,
+    getAllSupplies,
+    getAllToursByZone,
+    getTourByFilter,
+    getToursById, isAbleToReview, sendReview, tourByMonth
+} from "../service/toursService";
 const initialState = {
     zone: {
         allZone: [],
@@ -8,7 +16,14 @@ const initialState = {
         tour:{},
         tourByFilter:[],
         supplies:[],
-        city:[]
+        city:[],
+        tourByIdAcc:[],
+        allBillByIdAcc:[],
+        allBillByIdUser:[],
+        dataBill:"",
+        tourByMonth: [],
+        byProviderUsername:[],
+        isAble: false
     }
 }
 const AllZone = createSlice ({
@@ -30,11 +45,34 @@ const AllZone = createSlice ({
         })
         builder.addCase(getAllSupplies.fulfilled, (state, action) => {
             state.zone.supplies = action.payload;
-            console.log(state.zone.supplies = action.payload)
         })
         builder.addCase(getAllCity.fulfilled, (state, action) => {
             state.zone.city = action.payload;
-            console.log(state.zone.city = action.payload)
+        })
+        builder.addCase(allTourId.fulfilled, (state, action) => {
+            state.zone.tourByIdAcc = action.payload;
+        })
+        builder.addCase(getAllBillByAcc.fulfilled, (state, action) => {
+            state.zone.allBillByIdAcc = action.payload;
+        })
+        builder.addCase(getAllBillByUser.fulfilled,(state,action) =>{
+            state.zone.allBillByIdUser = action.payload;
+        })
+        builder.addCase(addBill.fulfilled,(state,action) =>{
+            state.zone.dataBill = action.payload;
+        })
+        builder.addCase(tourByMonth.fulfilled,(state,action) =>{
+            state.zone.tourByMonth = action.payload;
+        })
+        builder.addCase(getAllReviewsByTourId.fulfilled, (state, action) => {
+            state.zone.byProviderUsername = action.payload;
+        })
+        builder.addCase(isAbleToReview.fulfilled, (state, action) => {
+            state.zone.isAble = action.payload;
+        })
+        builder.addCase(sendReview.fulfilled, (state, action) => {
+            state.zone.byProviderUsername.unshift(action.payload);
+            state.zone.isAble = false;
         })
     }
 })

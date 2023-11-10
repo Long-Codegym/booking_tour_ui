@@ -18,7 +18,7 @@ const validationSchema = Yup.object().shape({
         .oneOf([Yup.ref('password'), null], 'Mật khẩu không trùng khớp')
         .required('Nhập lại mật khẩu là bắt buộc'),
     email: Yup.string().email('Email không hợp lệ').required('Email là bắt buộc'),
-    nickName: Yup.string().required('Tên người dùng là bắt buộc'),
+    fullName: Yup.string().required('Tên người dùng là bắt buộc'),
     address: Yup.string().required('Địa chỉ là bắt buộc'),
 });
 const Register = () => {
@@ -115,7 +115,7 @@ const Register = () => {
             {/* Navbar & Hero Start */}
             <div className="container-fluid position-relative p-0">
                 <nav className="navbar navbar-expand-lg navbar-light px-4 px-lg-5 py-3 py-lg-0">
-                    <a  href="/" className="navbar-brand p-0">
+                    <a href="" className="navbar-brand p-0">
                         <h1 className="text-primary m-0">
                             <i className="fa fa-map-marker-alt me-3"/>
                             Tourist
@@ -198,7 +198,7 @@ const Register = () => {
                                                 <div className="input-wrapper" style={{marginLeft:'10px',width:'50%', fontSize:'14px', color:'red'}}>
                                                     <Field
                                                         type="text"
-                                                        name="nickName"
+                                                        name="fullName"
                                                         placeholder="Tên người dùng"
                                                         maxLength="5000"
                                                         autoComplete="false"
@@ -210,7 +210,7 @@ const Register = () => {
                                                             outline: 'none', width:'250px'
                                                         }}
                                                     />
-                                                    <ErrorMessage name="nickName" component="div" className="error" />
+                                                    <ErrorMessage name="fullName" component="div" className="error" />
                                                 </div>
 
                                                 {message && (

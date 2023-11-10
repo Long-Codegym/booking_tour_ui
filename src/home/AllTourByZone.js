@@ -121,6 +121,7 @@ const AllTourByZone =() =>{
                                     <TourFilter/>
                                 }
                                 <div className="row g-1 justify-content-center">
+                                    <h2 style={{marginLeft : "150px"}}>Các Tour</h2>
                                         {allTourByZone &&
                                             allTourByZone.map((item, key) => (
                                                 <div key={key} className="col-lg-5 col-md-5 col-12 custom-item" style={{marginLeft: "5px"}}>
@@ -145,15 +146,15 @@ const AllTourByZone =() =>{
                                                                 </small>
                                                             </div>
                                                             <div className="text-center p-4">
-                                                                <h3 className="mb-0">Giá {item.tour.price} / 1 người</h3>
-                                                                <div className="mb-3">
-                                                                    <p style={{ color: "#86B817" }}>Đánh giá</p>
-                                                                    <small className="fa fa-star text-primary" />
-                                                                    <small className="fa fa-star text-primary" />
-                                                                    <small className="fa fa-star text-primary" />
-                                                                    <small className="fa fa-star text-primary" />
-                                                                    <small className="fa fa-star text-primary" />
-                                                                </div>
+                                                                <h3 style={{fontSize: "20px",width: "250px"}} className="mb-0">Giá {item.tour.price} / 1 người</h3>
+                                                                {/*<div className="mb-3">*/}
+                                                                {/*    <p style={{ color: "#86B817" }}>Đánh giá</p>*/}
+                                                                {/*    <small className="fa fa-star text-primary" />*/}
+                                                                {/*    <small className="fa fa-star text-primary" />*/}
+                                                                {/*    <small className="fa fa-star text-primary" />*/}
+                                                                {/*    <small className="fa fa-star text-primary" />*/}
+                                                                {/*    <small className="fa fa-star text-primary" />*/}
+                                                                {/*</div>*/}
                                                                 <p>{item.tour.describes}</p>
 
                                                                     <div className="d-flex justify-content-center mb-2">

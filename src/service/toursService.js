@@ -57,3 +57,84 @@ export const addBill = createAsyncThunk(
         return res.data;
     }
 )
+export const allTourId = createAsyncThunk(
+    "allTourId",
+    async (id) => {
+        const res = await customAxios.get("tours/listTourById/"+ id, {headers: {Authorization: "Bearer " + localStorage.getItem("token")}});
+        return res.data;
+    }
+)
+export const addImg = createAsyncThunk(
+    "addImg",
+    async (img) => {
+        const res = await customAxios.post("images/addImg", img, {headers: {Authorization: "Bearer " + localStorage.getItem("token")}});
+        return res.data;
+    }
+)
+export const    getAllBillByAcc = createAsyncThunk(
+    "getAllBillByAcc",
+    async ({idStatus,idAccount}) => {
+        const res = await customAxios.post(`bills/getBillByIdAcc/${idStatus}/${idAccount}`, {headers: {Authorization: "Bearer " + localStorage.getItem("token")}});
+        return res.data;
+    }
+)
+export const getAllBillByUser = createAsyncThunk(
+    "getAllBillByUser",
+    async ({idStatus,idAccount}) => {
+        console.log(idStatus, idAccount)
+        const res = await customAxios.post(`bills/getBillByIdUser/${idStatus}/${idAccount}`, {headers: {Authorization: "Bearer " + localStorage.getItem("token")}});
+        return res.data;
+    }
+)
+export const cancelBill = createAsyncThunk(
+    "cancelBill",
+    async (idBill) => {
+        const res = await customAxios.post("bills/cancel/" + idBill, {headers: {Authorization: "Bearer " + localStorage.getItem("token")}});
+        return res.data;
+    }
+)
+export const confirmBill = createAsyncThunk(
+    "confirmBill",
+    async (idBill) => {
+        const res = await customAxios.post("bills/confirm/"+ idBill, {headers: {Authorization: "Bearer " + localStorage.getItem("token")}});
+        return res.data;
+    }
+)
+export const complete = createAsyncThunk(
+    "complete",
+    async (idBill) => {
+        const res = await customAxios.post("bills/complete/"+ idBill, {headers: {Authorization: "Bearer " + localStorage.getItem("token")}});
+        return res.data;
+    }
+)
+export const tourByMonth = createAsyncThunk(
+    "tourByMonth",
+    async () => {
+        const res = await customAxios.get("tours", {headers: {Authorization: "Bearer " + localStorage.getItem("token")}});
+        return res.data;
+    }
+)
+export const sendReview = createAsyncThunk(
+    "sendReview",
+    async (review) => {
+        const res = await customAxios.post(`reviews/sendReview`, review,{headers: {Authorization: "Bearer " + localStorage.getItem("token")}});
+        return res.data;
+    }
+)
+export const getAllReviewsByTourId = createAsyncThunk(
+    "getAllReviewsByTourId",
+    async (tourId) => {
+        const res = await customAxios.get("reviews/allActiveByTourId/" + tourId,{headers: {Authorization: "Bearer " + localStorage.getItem("token")}});
+        console.log(res.data);
+        return res.data;
+    }
+)
+
+export const isAbleToReview = createAsyncThunk(
+    "isAbleToReview",
+    async (ids) => {
+        const {tourId, userId} = ids;
+        const res = await customAxios.get(`reviews/isAbleToReview?tourId=${tourId}&userId=${userId}`,{headers: {Authorization: "Bearer " + localStorage.getItem("token")}});
+        return res.data;
+    }
+)

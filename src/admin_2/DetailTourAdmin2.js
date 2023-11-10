@@ -1,48 +1,34 @@
-import {useEffect, useMemo, useState} from "react";
-import axios from "axios";
 import {useDispatch, useSelector} from "react-redux";
 import {Link, useLocation} from "react-router-dom";
-import {getAllReviewsByTourId, getToursById, isAbleToReview, sendReview} from "../service/toursService";
+import React, {useEffect, useState} from "react";
+import {addImg, addTour, getAllCity, getAllSupplies, getToursById} from "../service/toursService";
+import Swal from "sweetalert2";
 import {useNavigate} from "react-router";
 
-const DetailTour = () => {
-    // const {tour, setTour} = useState([]);
-    // const{id}=useState();
-    // console.log(id)
-    // useEffect(() => {
-    //     axios.get(`http://localhost:8080/tours/?id=${id}` ).then(response => {
-    //         setTour(response.data)
-    //     })
-    // }, []);
-    let PageSize = 5;
-    const accountData = localStorage.getItem("account");
+const DetailTourAdmin2 = () => {
     const navigate = useNavigate();
-    let idAccount = null;
-    if (accountData) {
-        try {
-            idAccount = JSON.parse(accountData).id;
-        } catch (e) {
-        }
-    }
     const dispatch = useDispatch();
     const location = useLocation();
-    const encodedZone = location.pathname.split("/detail/")[1];
+    const encodedZone = location.pathname.split("/detailTour/")[1];
     const idTour = decodeURIComponent(encodedZone);
     const [page, setPage] = useState(1);
-    const [star, setStar] = useState(5);
-    const reviews = useSelector(state => {
-        return state.zone.zone.byProviderUsername;
+    const [add,setAdd]=useState(false);
+
+    const [imgs, setImgs] = useState({
+        img:'',
+        tour:{
+            id:''
+        }
     })
 
     useEffect(() => {
         dispatch(getToursById(idTour))
-         dispatch(getAllReviewsByTourId(idTour))
     }, [idTour])
     const tour = useSelector((state) => {
         return state.zone.zone.tour;
     });
     console.log(tour)
-    console.log(reviews)
+
     const handleStarClicking = (e, num) => {
         setPage(num);
     }
@@ -53,65 +39,47 @@ const DetailTour = () => {
     const loadImages = () => {
         setVisibleImages(prevVisibleImages => prevVisibleImages - 6)
     };
-    const isAbleReview = useSelector(state => {
-        return state.zone.zone.isAble;
-    })
-    const handleStarClicking1 = (e, star) => {
-        setStar(star);
-        for (let i = 1; i <= 5; i++) {
-            const input = document.querySelector(`#star${i}`);
 
-            if (i <= star) {
-                if (!input.classList.contains("fa-star-active")) {
-                    input.classList.toggle("fa-star-active");
-                }
-            } else {
-                if (input.classList.contains("fa-star-active")) {
-                    input.classList.toggle("fa-star-active");
-                }
+    const handleAddTour = (event) => {
+        event.preventDefault();
+        setAdd(true);
+        const img = event.target.img.value;
+        // const id = idTour;
+        if (img) {
+            const updatedImgTour = {
+                ...imgs,
+                img,
+                tour: {id: idTour}
             }
+            setImgs(updatedImgTour);
         }
+
     }
-    const sendReviewFunction = () => {
-        const reviewContent = document.querySelector("#reviewContent").value;
-        const review = {
-            tour: {
-                id: idTour
-            },
-            accountUser: {
-                id: idAccount
-            },
-            rating: star,
-            content: reviewContent
+    useEffect(() => {
+        if (add) {
+            dispatch(addImg(imgs))
+        .then(() => {
+            dispatch(getToursById(idTour))
+                    Swal.fire({
+                        position: 'center',
+                        icon: 'success',
+                        title: 'Up ảnh thành công.',
+                        showConfirmButton: false,
+                        timer: 1500
+                    }).then(() => {
+                        navigate("/detailTour/" +idTour);
+                    });
+                });
+            setAdd(false);
         }
-        dispatch(sendReview(review)).then((data) => {
-            dispatch(getAllReviewsByTourId(idTour));
-        });
-    }
-        useEffect(() => {
-            try {
-                const ids = {
-                    tourId: idTour,
-                    userId: idAccount,
-                }
-                dispatch(isAbleToReview(ids));
-            } catch (e) {
-            }
-        }, [idTour, idAccount])
-        // dispatch(
-        const [currentPage, setCurrentPage] = useState(1);
-        const currentTableData = useMemo(() => {
-            const firstPageIndex = (currentPage - 1) * PageSize;
-            const lastPageIndex = firstPageIndex + PageSize;
-            return reviews.slice(firstPageIndex, lastPageIndex);
-        }, [currentPage, reviews]);
+    }, [imgs]);
+    console.log(imgs)
+
     return (
 
         <>
-            <meta charSet="utf-8"/>
             <link href="/css_detail_tour/1.css" rel="stylesheet"/>
             <link href="/css_detail_tour/2.css" rel="stylesheet"/>
-            <link href="/resources/css_review/cssReview.css" rel="stylesheet"/>
             <div className="container-xxl py-5">
                 <ul id="tour-tab" className="nav nav-tabs">
                     <li className="active">
@@ -119,13 +87,6 @@ const DetailTour = () => {
                             handleStarClicking(e, 1)
                         }}>
                             Thông tin tour
-                        </a>
-                    </li>
-                    <li className="active">
-                        <a data-toggle="tab" href="#tour-schedule" onClick={(e) => {
-                            handleStarClicking(e, 5)
-                        }}>
-                            Đánh giá
                         </a>
                     </li>
                     <li className="">
@@ -165,7 +126,7 @@ const DetailTour = () => {
                                 <h6 className="section-title bg-white text-start text-primary pe-3">Thông tin về
                                     Tour</h6>
                                 <h1 className="mb-4">
-                                   Tour: {tour.tour.name}
+                                    {tour.tour.name}
                                 </h1>
                                 <p className="mb-4">
                                     Phương tiện {tour.tour.convenientWard}
@@ -173,17 +134,17 @@ const DetailTour = () => {
                                 <div className="row gy-2 gx-4 mb-4">
                                     <div className="col-sm-6">
                                         <p className="mb-0"><i className="fa fa-arrow-right text-primary me-2"></i>
-                                          Giá:  {tour.tour.price} VNĐ /1 người
+                                            {tour.tour.price}
                                         </p>
                                     </div>
                                     <div className="col-sm-6">
                                         <p className="mb-0"><i className="fa fa-arrow-right text-primary me-2"></i>
-                                          Thời gian Tour:  {tour.tour.tourTime} ngày
+                                            {tour.tour.tourTime} Ngày
                                         </p>
                                     </div>
                                     <div className="col-sm-6">
                                         <p className="mb-0"><i className="fa fa-arrow-right text-primary me-2"></i>
-                                          Mô tả:  {tour.tour.describes}
+                                            {tour.tour.schedule}
                                         </p>
                                     </div>
                                     <div className="col-sm-6">
@@ -201,7 +162,7 @@ const DetailTour = () => {
                                     {/*</div>*/}
                                 </div>
                                 <Link to={"/bookingTour/" +tour.tour.id}>
-                                <a class="btn btn-primary py-3 px-5 mt-2" href="">Đặt Tour</a>
+                                    <a class="btn btn-primary py-3 px-5 mt-2" href="">Đặt Tour</a>
                                 </Link>
                             </div>
                         </div>
@@ -237,9 +198,9 @@ const DetailTour = () => {
                                 </td>
                                 <td data-th="Hành động" className="center">
                                     <Link to={"/bookingTour/" + tour.tour.id}>
-                                    <a target="_blank" className="btn-tour btn-tour__pro" href="booking/243/76">
-                                        Đặt ngay
-                                    </a>
+                                        <a target="_blank" className="btn-tour btn-tour__pro" href="booking/243/76">
+                                            Đặt ngay
+                                        </a>
                                     </Link>
                                 </td>
                             </tr>
@@ -275,6 +236,15 @@ const DetailTour = () => {
                                         onClick={loadImages}>
                                     Thu ngọn
                                 </button>
+                                <form onSubmit={(event)=>handleAddTour(event)}>
+                                <label htmlFor="img" style={{fontSize: "25px", marginTop: "50px"}}>Thêm ảnh</label>
+                                <input required={"ko được để chống"} type="text" id="img" name="img" accept="image/png, image/jpeg, image/jpg" multiple="multiple"/>
+                                <button className="btn-17" style={{marginLeft: "10px",width:"100px", borderRadius: "10px"}}>
+                                        <span className="text-container">
+                                             <span className="text">Thêm</span>
+                                         </span>
+                                 </button>
+                                </form>
                             </div>}
                         </div>
                     }
@@ -471,101 +441,9 @@ const DetailTour = () => {
                             ))}
                         </div>
                     </div>
-                }
-                {
-                    page == 5 &&
-                        <div className="container">
-                            <div className="title-player-profile row">
-                                <div style={{marginTop: "20px"}}><p>&nbsp;</p></div>
-                                <div className="col-xs-6"><span >Đánh giá</span></div>
-                                {
-                                    isAbleReview && isAbleReview == true ?
-                                        <>
-                                            <div style={{marginTop: "50px"}}><p>&nbsp;</p></div>
-                                            <textarea placeholder="Nhập đánh giá ..." name="message" type="text"
-                                                      className="form-control" defaultValue={""}
-                                                      style={{marginLeft: "15px", width: "97%"}} id={"reviewContent"}/>
-                                            <>
-                                                <style
-                                                    dangerouslySetInnerHTML={{
-                                                        __html:
-                                                            "\n.rate {\n    float: left;\n    height: 46px;\n    padding: 0 10px;\n}\n.rate:not(:checked) > input {\n    position:absolute;\n    top:-9999px;\n}\n.rate:not(:checked) > label {\n    float:right;\n    width:1em;\n    overflow:hidden;\n    white-space:nowrap;\n    cursor:pointer;\n    font-size:30px;\n    color:#ccc;\n}\n.rate:not(:checked) > label:before {\n    content: '★ ';\n}\n\n/* Modified from: https://github.com/mukulkant/Star-rating-using-pure-css */\n"
-                                                    }}
-                                                />
 
-                                                <div className="rate" >
-                                                    <i className="fas fa-star fa-star-active" id={"star1"} onClick={(e) => {handleStarClicking1(e, 1)}} style={{cursor: "pointer"}}></i>
-                                                    <i className="fas fa-star fa-star-active" id={"star2"} onClick={(e) => {handleStarClicking1(e, 2)}} style={{cursor: "pointer"}}></i>
-                                                    <i className="fas fa-star fa-star-active" id={"star3"} onClick={(e) => {handleStarClicking1(e, 3)}} style={{cursor: "pointer"}}></i>
-                                                    <i className="fas fa-star fa-star-active" id={"star4"} onClick={(e) => {handleStarClicking1(e, 4)}} style={{cursor: "pointer"}}></i>
-                                                    <i className="fas fa-star fa-star-active" id={"star5"} onClick={(e) => {handleStarClicking1(e, 5)}} style={{cursor: "pointer"}}></i>
-                                                </div>
-                                            </>
-
-                                            <div className={"customButton"} onClick={() => {sendReviewFunction()}}>
-                                                <p>Gửi</p>
-                                            </div>
-                                        </>
-                                        :
-                                        <></>
-                                }
-
-                            </div>
-                            <div className="text-center review-duo-player row">
-                                <div className="col-md-12">
-                                    { currentTableData && currentTableData.map((item, key) => {
-                                            return (
-                                                <div className="full-size" key={key}>
-                                                    <div className="review-image-small">
-                                                        <div className="avt-rank avt-md"><img
-                                                            src={item.accountUser.avatar}
-                                                            className="avt-1-15 avt-img" alt=""/>
-                                                        </div>
-                                                    </div>
-                                                    <div className="wrapper-content-rating">
-                                                        <div className="review-content">
-                                                            <p className="name-player-review color-vip-1" style={{color: "red", fontSize: "25px"}}>{item.accountUser.fullName}</p>
-                                                            <p className="time-player-review">
-                                                                 <span>{new Date(item.date).toLocaleTimeString() + " "
-                                                                     + new Date(item.date).toLocaleDateString()}</span>
-                                                            </p>
-                                                        </div>
-                                                        <div className="review-rating">
-                                                            <div className="rateting-style">
-                                                                {
-                                                                    [1, 2, 3, 4, 5].map(e => {
-                                                                        if (e <= item.rating) {
-                                                                            return (<i className="fas fa-star"></i>)
-                                                                        }
-                                                                    })
-                                                                }
-                                                                &nbsp;
-                                                            </div>
-                                                        </div>
-                                                        <p className="content-player-review" style={{color: "black",fontSize: "20px"}}>{item.content}</p></div>
-                                                </div>
-
-                                            );
-                                        })
-                                    }
-
-                                    {/* reviews là mảng gốc các phần tử thật */}
-                                    {/*    End Pagination*/}
-                                </div>
-                                {/*<div className="col-md-12">*/}
-                                {/*    <div className="page_account"><p className="active">1</p>*/}
-                                {/*        <p className="">2</p>*/}
-                                {/*        <p className="">3</p>*/}
-                                {/*        <p className="">4</p>*/}
-                                {/*        <p className="">5</p>*/}
-                                {/*        <p className="active" style={{cursor: "auto"}}>1/36</p>*/}
-                                {/*    </div>*/}
-                                {/*</div>*/}
-                            </div>
-                        </div>
                 }
             </div>
         </>)
-};
-
-export default DetailTour;
+}
+export default DetailTourAdmin2;

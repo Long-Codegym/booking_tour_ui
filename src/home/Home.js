@@ -3,22 +3,19 @@ import {useDispatch} from "react-redux";
 import {allZone} from "../service/zoneService";
 import Zone from "./Zone";
 import PopularTours from "./PopularTours";
+import {getAllSupplies, tourByMonth} from "../service/toursService";
 import {getAllAccByAdmin} from "../service/accountService";
-import {getAllSupplies} from "../service/toursService";
 
 const Home =()=>{
     const dispatch = useDispatch();
-    const user=localStorage.getItem("account");
     useEffect(()=>{
         dispatch(allZone())
         dispatch(getAllSupplies())
+        dispatch(tourByMonth())
     },[])
     return (
         <>
-            {/* Destination Start */}
             <PopularTours/>
-            {/* Destination Start */}
-            {/* Package Start */}
             <Zone/>
         </>
 

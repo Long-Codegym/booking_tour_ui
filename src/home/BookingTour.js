@@ -3,9 +3,13 @@ import {useLocation, useParams} from "react-router-dom";
 import {useDispatch, useSelector} from "react-redux";
 import {addBill, addTour, getAllCity, getAllSupplies, getToursById} from "../service/toursService";
 import {DatePicker} from "antd";
+import Swal from "sweetalert2";
+import {useNavigate} from "react-router";
+import axios from "axios";
 
 const BookingTour = () => {
     const accountData = localStorage.getItem("account");
+    const navigate = useNavigate();
     let idAccount = null;
     if (accountData) {
         try {
@@ -16,6 +20,7 @@ const BookingTour = () => {
     const dispatch = useDispatch();
     const {id} = useParams()
     const [add,setAdd]=useState(false);
+    const [check,setCheck]=useState(false);
     useEffect(() => {
         dispatch(getToursById(id))
     }, [id])
@@ -23,6 +28,8 @@ const BookingTour = () => {
         return state.zone.zone.tour;
     });
     console.log(tour)
+
+
     const [selectedDate, setSelectedDate] = useState(null);
     const [people, setPeople] = useState(0);
     const handlePeople = (event) => {
@@ -92,14 +99,41 @@ const BookingTour = () => {
             isActive: true,
         };
         setBill(updatedCreateTour);
+        setCheck(true)
     };
-    useEffect(() => {
-        if(add){
-            dispatch(addBill(bill));
-            setAdd(false);
-        }
-    }, [bill]);
-    console.log(bill)
+
+
+    if (check) {
+        axios.post('http://localhost:8080/bills/',bill,)
+            .then(async (response) => {
+                console.log( response)
+                if (response.data == "1") {
+                    await Swal.fire({
+                        position: 'center',
+                        icon: 'success',
+                        title: 'Đặt Tour thành công.',
+                        showConfirmButton: false,
+                        timer: 1500
+                    });
+                    setCheck(false)
+                    navigate("/billUser")
+                } else if (response.data == "Bạn không đủ số dư") {
+                    await Swal.fire({
+                        position: 'center',
+                        icon: 'success',
+                        title: 'Số dư tài khoản không đủ.',
+                        showConfirmButton: false,
+                        timer: 1500
+                    });
+                    setCheck(false)
+                }
+            })
+    }
+
+
+
+
+
     return (
         <>
             <link rel="stylesheet" type="text/css" href="/css_bookingtour/test3.css"/>
@@ -217,13 +251,8 @@ const BookingTour = () => {
                                     <div className="col-auto mb-3">
                                         <div className="form-check form-check-custom d-flex align-items-center">
                                             <label className="form-check-label mr-2">Số người</label>
-                                            <select
-                                                className="custom-select custom-input custom-place mr-2"
-                                                id="persons"
-                                                name="persons"
-                                                required=""
-                                                onChange={handlePeople}
-                                            >
+                                            <select className="custom-select custom-input custom-place mr-2" id="persons" name="persons" required onChange={handlePeople}>
+                                                <option ></option>
                                                 <option value={1}>1</option>
                                                 <option value={2}>2</option>
                                                 <option value={3}>3</option>
@@ -337,8 +366,8 @@ const BookingTour = () => {
                                     <div className="col-auto mb-3">
                                         <div className="form-check form-check-custom d-flex align-items-center">
                                             <label className="form-check-label mr-2">Tổng giá tiền Tour</label>
-                                            <input className="custom-select custom-input custom-place" id="total" name="exped-tour" required="" data-gtm-form-interact-field-id={1} readOnly
-                                                value={ ((tour.tour.price)-((tour.tour.price/100)*tour.tour.discount))*people}
+                                            <input style={{width : "200px"}} className="custom-select custom-input custom-place" id="total" name="exped-tour" required="" data-gtm-form-interact-field-id={1} readOnly
+                                                   value={Math.floor(((tour.tour.price) - ((tour.tour.price / 100) * tour.tour.discount)) * people)}
                                             />
                                         </div>
                                     </div>
@@ -350,8 +379,7 @@ const BookingTour = () => {
                                     <div className="col-4 p-relative block-invalid">
                                         <div className="group-search abs form-control">
                                             <div className="group-search-content">
-                                                <DatePicker  className="tourmaster-datepicker tourmaster-datepicker1" id="dateStart" name="dates" placeholderText="Chọn ngày đi" selected={selectedDate} onChange={handleDateChange} dateFormat="dd MM yyyy" showMonthYearPicker locale="vi" required/>
-
+                                                <DatePicker  className="tourmaster-datepicker tourmaster-datepicker1" id="dateStart" name="dates" placeholderText="Chọn ngày đi" selected={selectedDate} onChange={handleDateChange} dateFormat="dd MM yyyy" showMonthYearPicker locale="vi" required={"ko được để trống"}/>
                                                 <div className="invalid-feedback">Vui lòng chọn ngày đặt</div>
                                             </div>
                                         </div>

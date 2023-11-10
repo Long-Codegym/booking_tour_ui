@@ -5,6 +5,7 @@ import {useEffect, useState} from "react";
 import Swal from "sweetalert2";
 import {useDispatch} from "react-redux";
 import LoginService from "../service/login";
+import {Link} from "react-router-dom";
 
 function Login() {
     // const [loadScript, setLoadScript] = useState(false);
@@ -46,7 +47,7 @@ function Login() {
             const response = await LoginService.login(values);
             const data = response.data;
             console.log(data.isActive);
-            if (data.status.name === "active" && data.isActive) {
+            if (data.status.name === "Active" && data.isActive) {
                 localStorage.setItem("token", data.token);
                 localStorage.setItem("account", JSON.stringify(data));
                 if (data.role.name ==="ROLE_ADMIN") {
@@ -59,10 +60,10 @@ function Login() {
             } else if (data.status.name === "emailverify") {
                 navigate("/login");
                 setMessage("tài khoản xác nhận email");
-            } else if (data.status.name === "register") {
+            } else if (data.status.name === "Register") {
                 navigate("/login");
                 setMessage("tài khoản chưa được chấp nhận");
-            } else if (data.status.name === "block") {
+            } else if (data.status.name === "Block") {
                 navigate("/login");
                 setMessage("tài khoản của bạn đã bị khóa");
             } else if (!data.isActive) {
@@ -91,14 +92,17 @@ function Login() {
             <link rel="stylesheet" type="text/css" href="/css_login/css/style.css"/>
             <title>React App</title>
             <div className="notifications-wrapper"></div>
-            <div className="main-singin-box">
-                <div className="wrapper">
+            <div className="main-singin-box" style={{ backgroundImage: 'url(/img_demo/backgr.webp)', backgroundSize: "cover" }}>
+                <div className="wrapper"  >
                     <div className="container">
                         <div className="row login-page">
-                            <div className="col-md-7 hidden-sm hidden-xs image-login">
-                                <img style={{height: '100%', borderRadius: '8px', boxShadow: '5px 5px 7px 0'}}
+                            <div className="col-md-7 hidden-sm hidden-xs image-login" >
+                                <a href={"/"}>
+                                <img  style={{height: '100%', borderRadius: '8px', boxShadow: '5px 5px 7px 0'}}
                                      src="/img_demo/phu_quoc.jpg" className=""
                                      alt="PD"/>
+                                </a>
+
                             </div>
                             <div className="content-main" style={{width: '450px', border: '1px', borderRadius: '8px', backgroundColor: '#fff', padding: '20px', boxShadow: '5px 5px 7px 0'}}>
                                 <h3 style={{color: '#f0564a'}}>Du lịch mọi nơi</h3>
