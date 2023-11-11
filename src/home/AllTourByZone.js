@@ -10,7 +10,14 @@ const AllTourByZone =() =>{
     const location = useLocation();
     const encodedZone = location.pathname.split("/tour/")[1];
     const nameZone = decodeURIComponent(encodedZone);
-
+    const accountData = localStorage.getItem("account");
+    let idAccount = null;
+    if (accountData) {
+        try {
+            idAccount = JSON.parse(accountData).id;
+        } catch (e) {
+        }
+    }
 
     const allTourByZone = useSelector((state) => {
         return state.zone.zone.allTourByZone;
@@ -85,7 +92,7 @@ const AllTourByZone =() =>{
                                     <p>Giá</p>
                                     <div>
                                         <label>
-                                            <input type="radio" name="price" value="null-1000000" onChange={setPrice}/> Dưới 1,000,000 VND
+                                            <input type="radio" name="price" value="null-1000000" onChange={setPrice} /> Dưới 1,000,000 VND
                                         </label>
                                     </div>
                                     <div>
@@ -125,7 +132,7 @@ const AllTourByZone =() =>{
                                         {allTourByZone &&
                                             allTourByZone.map((item, key) => (
                                                 <div key={key} className="col-lg-5 col-md-5 col-12 custom-item" style={{marginLeft: "5px"}}>
-                                                    <div className="tour-item">
+                                                    <div className="tour-item" style={{width: "350px", height: "416px"}}>
                                                         <div className="package-item">
                                                             <div className="overflow-hidden">
                                                                 <img
@@ -163,11 +170,13 @@ const AllTourByZone =() =>{
                                                                             Chi tiết Tour
                                                                         </a>
                                                                         </Link>
+                                                                        { idAccount != null &&
                                                                         <Link to={"/bookingTour/" + item.tour.id}>
                                                                         <a Bo href="book_tour/src/home/AllTourByZone#" className="btn btn-sm btn-primary px-3" style={{ borderRadius: "0 30px 30px 0" }}>
                                                                             Đặt Tour ngay
                                                                         </a>
                                                                         </Link>
+                                                                        }
                                                                     </div>
 
                                                             </div>

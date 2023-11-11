@@ -6,6 +6,14 @@ const TourFilter =()=>{
         return state.zone.zone.tourByFilter;
     });
     console.log(tourFilter);
+    const accountData = localStorage.getItem("account");
+    let idAccount = null;
+    if (accountData) {
+        try {
+            idAccount = JSON.parse(accountData).id;
+        } catch (e) {
+        }
+    }
     return(
         <>
             <div className="row g-1 justify-content-center">
@@ -34,17 +42,17 @@ const TourFilter =()=>{
                                     </div>
                                     <div className="text-center p-4">
                                         <h3 className="mb-0">Giá {item.tour.price} / 1 người</h3>
-                                        <div className="mb-3">
-                                            <p style={{ color: "#86B817" }}>Đánh giá</p>
-                                            <small className="fa fa-star text-primary" />
-                                            <small className="fa fa-star text-primary" />
-                                            <small className="fa fa-star text-primary" />
-                                            <small className="fa fa-star text-primary" />
-                                            <small className="fa fa-star text-primary" />
-                                        </div>
+                                        {/*<div className="mb-3">*/}
+                                        {/*    /!*<p style={{ color: "#86B817" }}>Giớ thiệu</p>*!/*/}
+                                        {/*    /!*<small className="fa fa-star text-primary" />*!/*/}
+                                        {/*    /!*<small className="fa fa-star text-primary" />*!/*/}
+                                        {/*    /!*<small className="fa fa-star text-primary" />*!/*/}
+                                        {/*    /!*<small className="fa fa-star text-primary" />*!/*/}
+                                        {/*    /!*<small className="fa fa-star text-primary" />*!/*/}
+                                        {/*</div>*/}
                                         <p>{item.tour.describes}</p>
-                                        <Link to={"/detail/" + item.tour.id}>
                                             <div className="d-flex justify-content-center mb-2">
+                                                <Link to={"/detail/" + item.tour.id}>
                                                 <a
                                                     href="book_tour/src/home/AllTourByZone#"
                                                     className="btn btn-sm btn-primary px-3 border-end"
@@ -52,6 +60,9 @@ const TourFilter =()=>{
                                                 >
                                                     Chi tiết Tour
                                                 </a>
+                                                </Link>
+                                                {idAccount != null &&
+                                                    <Link to={"/bookingTour/" + item.tour.id}>
                                                 <a
                                                     href="book_tour/src/home/AllTourByZone#"
                                                     className="btn btn-sm btn-primary px-3"
@@ -59,8 +70,9 @@ const TourFilter =()=>{
                                                 >
                                                     Đặt Tour ngay
                                                 </a>
+                                                    </Link>}
                                             </div>
-                                        </Link>
+
                                     </div>
                                 </div>
                             </div>

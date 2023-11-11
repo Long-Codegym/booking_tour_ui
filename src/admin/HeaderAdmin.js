@@ -1,4 +1,22 @@
+import {Link} from "react-router-dom";
+import LoginService from "../service/login";
+import {useNavigate} from "react-router";
+import {useState} from "react";
+
 const HeaderAdmin = () => {
+    const navigate = useNavigate();
+    const [acc, setAcc] = useState(() => {
+        try {
+            return JSON.parse(localStorage.getItem("account"))
+        } catch (e) {
+            return {};
+        }
+    });
+    const handleClick = (e) => {
+        LoginService.logout().then(r => {
+            navigate("/login");
+        });
+    };
   return(<>
       <meta charSet="utf-8" />
       <title>Tourist - Travel Agency HTML Template</title>
@@ -101,9 +119,75 @@ const HeaderAdmin = () => {
                       {/*    Contact*/}
                       {/*</a>*/}
                   </div>
+                  {acc  && acc.id !=null && acc.role.id ===1 ?
+                  <div className="rounded-pill py-2 px-4">
+                      <div className="navbar-nav ms-auto py-0">
+                          <li className="nav-item nav-link">
+                              <a  style={{borderRadius: "10px"}} id="header-nav-dropdown" role="button" className="dropdown-toggle" aria-haspopup="true" aria-expanded="false" href="#">
+                                  <img src={acc.avatar} style={{width: "45px",height: "45px",borderRadius: "50%"}} className="avt-img" alt="PD"
+                                  />
+                              </a>
+                              <ul style={{marginLeft: "-300px"}} role="menu" className="dropdown-menu" aria-labelledby="header-nav-dropdown">
+                                  <li role="presentation" className="page-user">
+                                      <a role="menuitem" tabIndex={-1} href="#">
+                                          <img
+                                              src={acc.avatar}
+                                              className="avt-img"
+                                              alt="PD"
+                                          />
+                                          <div className="text-logo">
+                                              <h5>Tên</h5>
+                                              <p>
+                                                  Tên : {acc.fullName}<span></span>
+                                              </p>
+                                          </div>
+                                      </a>
+                                  </li>
+                                  <li role="presentation" className="menu-item hidden-lg hidden-md">
+                                      <a role="menuitem" tabIndex={-1} href="#">
+                                          <i className="fas fa-plus" /> <span>Số dư</span> :{" "}
+                                          <span className="money">{acc.balance} đ</span>
+                                      </a>
+                                  </li>
+                                  <li role="presentation" className="menu-item">
+                                      <a role="menuitem" tabIndex={-1} href="#" onClick={handleClick}>
+                                          <i className="fas fa-power-off" /> <span>Đăng xuất</span>
+                                      </a>
+                                  </li>
+                                  <div className="menu-item list-flag">
+                                      <div className="box-item">
+                                          <div className="flag-all active">
+                                              <img
+                                                  src="https://files.playerduo.net/production/static-files/flag/2.png"
+                                                  className="flag flag-vn"
+                                                  alt="PD"
+                                              />
+                                          </div>
+                                      </div>
+                                      {/*<div className="box-item">*/}
+                                      {/*    <a*/}
+                                      {/*        href="https://www.facebook.com/groups/playerduovn"*/}
+                                      {/*        target="_blank"*/}
+                                      {/*        rel="noopener noreferrer"*/}
+                                      {/*    >*/}
+                                      {/*        <span>Group</span>*/}
+                                      {/*    </a>*/}
+                                      {/*    <a*/}
+                                      {/*        href="https://www.facebook.com/playerduo"*/}
+                                      {/*        target="_blank"*/}
+                                      {/*        rel="noopener noreferrer"*/}
+                                      {/*    >*/}
+                                      {/*        <span>Fanpage</span>*/}
+                                      {/*    </a>*/}
+                                      {/*</div>*/}
+                                  </div>
+                              </ul>
+                          </li>
+                      </div>
+                  </div> :
                   <a href="/login" className="btn btn-primary rounded-pill py-2 px-4">
                       Đăng nhập
-                  </a>
+                  </a>}
               </div>
           </nav>
           <div className="container-fluid bg-primary py-5 mb-5 hero-header" style={{}}>

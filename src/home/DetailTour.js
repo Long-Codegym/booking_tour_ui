@@ -200,9 +200,11 @@ const DetailTour = () => {
                                     {/*        biz ghi thêm gì</p>*/}
                                     {/*</div>*/}
                                 </div>
+                                {idAccount !=null &&
                                 <Link to={"/bookingTour/" +tour.tour.id}>
                                 <a class="btn btn-primary py-3 px-5 mt-2" href="">Đặt Tour</a>
                                 </Link>
+                                }
                             </div>
                         </div>
                     </div>
@@ -235,13 +237,16 @@ const DetailTour = () => {
                                 <td data-th="Suất ăn" className="center" style={{color: "red"}}>
                                     {tour.tour.discount}%
                                 </td>
+                                {idAccount != null &&
                                 <td data-th="Hành động" className="center">
+
                                     <Link to={"/bookingTour/" + tour.tour.id}>
                                     <a target="_blank" className="btn-tour btn-tour__pro" href="booking/243/76">
                                         Đặt ngay
                                     </a>
                                     </Link>
                                 </td>
+                                }
                             </tr>
                             </tbody>
                         </table>
